@@ -1,7 +1,10 @@
-name: analysis
+name: solar-forcing
 channels:
     - conda-forge
     - nodefaults
 dependencies:
-    - bokeh
-    - bottleneck
+    - matplotlib
+    - numpy
+    - xarray
+    - pandas
+    - scipy
