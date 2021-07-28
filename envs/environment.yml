@@ -8,3 +8,4 @@ dependencies:
     - xarray
     - pandas
     - scipy
+    - numba
