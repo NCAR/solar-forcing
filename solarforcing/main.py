@@ -1,5 +1,5 @@
-import calc
-import data_access
+import solarforcing.calc as calc
+import solarforcing.data_access as data_access
 import pydantic
 import numpy as np
 from datetime import datetime

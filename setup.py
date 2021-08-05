@@ -32,7 +32,7 @@ setup(
     long_description=long_description,
     include_package_data=True,
     keywords='reproducible,science,xarray,earth system model',
-    name='solar-forcing',
+    name='solarforcing',
     packages=find_packages(),
     entry_points={},
     url='https://github.com/NCAR/solar-forcing',
