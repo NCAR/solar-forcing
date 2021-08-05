@@ -1,4 +1,4 @@
-name: solar-forcing
+name: solar-forcing-dev
 channels:
     - conda-forge
     - nodefaults
@@ -9,3 +9,6 @@ dependencies:
     - pandas
     - scipy
     - numba
+    - jupyterlab
+    - pydantic
+    - datetime
