@@ -16,7 +16,7 @@ class FluxCalculation:
     data_dir: str = 'data/'
     start_date: datetime = None
     end_date: datetime = None
-    angle = float = 80.
+    angle: float = 80.
     
     def __post_init_post_parse__(self):
         self.energy_grid = calc.gen_energy_grid(self.nbins_e, self.min_e, self.max_e)
@@ -39,7 +39,7 @@ class FluxCalculation:
     def generate_dataset(self):
         
         try:
-            isinstance(self.vdk_flux, np.array)
+            isinstance(self.vdk_flux, np.ndarray)
             
         except (NameError, AttributeError):
             self.calculate_flux()
@@ -55,5 +55,5 @@ class FluxCalculation:
             attrs=dict(description="Flux calculation",
                        units="electrons / (cm2 s keV"))
         
-        self.ds
+        self.ds = ds
         return self.ds
