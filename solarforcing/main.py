@@ -17,10 +17,12 @@ class FluxCalculation:
     start_date: datetime = None
     end_date: datetime = None
     angle: float = 80.
+    standard_atmosphere_path: str = '../data/msis2.0_atm_out.txt'
     
     def __post_init_post_parse__(self):
         self.energy_grid = calc.gen_energy_grid(self.nbins_e, self.min_e, self.max_e)
         self.lshell = np.arange(self.min_lshell, self.max_lshell, self.lshell_spacing)
+        self.glat = calc.lshell_to_glat(self.lshell)
 
     def grab_data(self):
         self.df = data_access.grab_potsdam_file(self.data_dir, self.start_date, self.end_date)
@@ -35,6 +37,17 @@ class FluxCalculation:
             self.grab_data()
             self.vdk_flux = calc.calculate_flux(self.lshell, self.ap, self.energy_grid, angle=self.angle)
         return self.vdk_flux
+
+    def calculate_ipr(self):
+        standard_atmosphere = data_access(self.standard_atmosphere_path)
+        
+        iprm_ds = calc.calculate_iprm(self.glat, self.ap, self.time,
+                                      standard_atmosphere.alt, standard_atmosphere.rho, 
+                                      standard_atmosphere.H, self.energy_grid)
+        
+        self.iprm_ds = iprm_ds
+
+        return iprm_ds
     
     def generate_dataset(self):
         
@@ -48,12 +61,19 @@ class FluxCalculation:
             data_vars=dict(
                 vdk_energy_spectrum=(["lshell", "time", "e"], self.vdk_flux),
                 lshell=self.lshell,
-                glat = calc.lshell_to_glat(self.lshell),
+                glat = self.glat,
                 time=self.time,
                 e=self.energy_grid,
             ),
             attrs=dict(description="Flux calculation",
                        units="electrons / (cm2 s keV"))
+
+        try:
+            isinstance(self.iprm_ds, xr.Dataset)
+            
+        except (NameError, AttributeError):
+            self.calculate_ipr()
         
-        self.ds = ds
+        self.ds = xr.merge([ds, self.iprm_ds])
+
         return self.ds

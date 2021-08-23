@@ -170,5 +170,75 @@ def glat_to_lshell(glat):
     """
     return 1.01 / np.cos(glat*np.pi/180.)**2
 
+@jit(nopython=True)
+def calculate_ipr(glats, aps, alt=alt.values, rho=rho.values, H=H.values, e=e):
+    ipr_vals = np.empty(shape=(len(aps),len(glats), len(e), len(alt)))
+    for i in range(len(aps)):
+        for j in range(len(glats)):
+            l = 1.01 / np.cos(glats[j]*np.pi/180.)**2
+            # calculate the top of the atmosphere energetic electron energy spectrum
+            flux_sd = vdk2016(e, l, aps[i])
+            
+            # van de Kamp is per steradian (electrons / (cm2 sr s keV))
+            # assume flux is isotropic inside a nominal bounce loss cone (BLC) angle
+            # of 66.3˚. The area of the BLC in sr is 2pi(1-cosd(66.3))
+            flux = 2.*np.pi*(1-np.cos(np.radians(80))) * flux_sd
+
+            # calculate the IPR as a function f height and energy
+            ipr = iprmono(e, flux, rho, H)
+            
+            # Add the results to the ipr array
+            ipr_vals[i, j, :, :] = ipr
+            
+    return ipr_vals
+
+def calculate_iprm(glats, aps, times, alt, rho, H, e):
+    """
+    Calculates iprm from a dataset
+    
+    Parameters
+    ----------
+    glats: numpy.array
+      Array of geomagnetic latitudes
+    aps: numpy.array
+      Array of AP values
+    times: list
+      List of times corresponding to ap values
+    alt: numpy.array
+      Array of altitude values
+    rho: numpy.array
+      Array of density values
+    H: numpy.array
+      Array of scaling height values
+    e: numpy.array
+      Energy grid used for this calcualtion
+
+   Returns
+   -------
+   xarray.Dataset with IPRM values
+
+    """
+    
+    ipr = calculate_ipr(glats, aps, alt=alt, rho=rho, H=H, e=e)
+    
+    # calculate ipr total by integrating across the energy spectrum
+    ipr_tot = integrate.simps(ipr, e, axis=2)
+    
+    # calculate iprm
+    iprm = ipr_tot/rho
+    
+    # Calculate pressure levels
+    plevs = 1013.*np.exp(-alt/6.8)
+    
+    # Build a dataset for the output
+    out_ds = xr.Dataset(data_vars=dict(iprm=(['time', 'glat', 'pressure'], iprm),
+                                       ap = (['time'], aps),
+                                       glat = glats,
+                                       pressure = plevs,
+                                       time=times))
+    out_ds = out_ds.transpose("time", "pressure", "glat")
+    
+    return out_ds.sortby('pressure')
+
 jit_module(nopython=True, error_model="numpy")
 
