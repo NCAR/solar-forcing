@@ -64,6 +64,6 @@ def read_atm(file):
     # calculate H, the scale height (cm)
     H = kboltz*t/(28.6*amu*grav)*1e2
 
-    df = pd.to_dataframe('H':H, 'rho':rho, 'alt':alt)
+    df = pd.DataFrame({'H':H, 'rho':rho, 'alt':alt})
 
     return df

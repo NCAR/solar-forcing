@@ -2,6 +2,7 @@ import numpy as np
 from numba import jit, jit_module
 import pydantic
 from datetime import datetime
+from scipy import integrate
 
 @jit(nopython=True)
 def gen_energy_grid(nbins, min_e=30., max_e=1000.):
@@ -171,7 +172,62 @@ def glat_to_lshell(glat):
     return 1.01 / np.cos(glat*np.pi/180.)**2
 
 @jit(nopython=True)
-def calculate_ipr(glats, aps, alt=alt.values, rho=rho.values, H=H.values, e=e):
+def fang(y, Emono):
+# Input: 
+# y - normalized atmospheric column mass as a function of vertical location (z)
+# Emono - is incident electron energy (keV)
+# Output:
+# f - quanity calculated by eqn. (4)
+
+    # Table 1.
+    p1 = np.array([(1.24616E+0,  1.45903E+0, -2.42269E-1,  5.95459E-2), 
+                   (2.23976E+0, -4.22918E-7,  1.36458E-2,  2.53332E-3),
+                   (1.41754E+0,  1.44597E-1,  1.70433E-2,  6.39717E-4),
+                   (2.48775E-1, -1.50890E-1,  6.30894E-9,  1.23707E-3),
+                   (-4.65119E-1, -1.05081E-1, -8.95701E-2,  1.22450E-2),
+                   (3.86019E-1,  1.75430E-3, -7.42960E-4,  4.60881E-4),
+                   (-6.45454E-1,  8.49555E-4, -4.28581E-2, -2.99302E-3),
+                   (9.48930E-1,  1.97385E-1, -2.50660E-3, -2.06938E-3)])
+
+    # terms in eq. (5)
+    lne = np.log(Emono)
+    lne2 = lne*lne
+    lne3 = lne*lne2
+
+    # step 2. calculate the C array in (5)
+    c = np.empty((8))
+    for i in range(8):
+        c[i] = np.exp(p1[i,0] + p1[i,1]*lne + p1[i,2]*lne2 + p1[i,3]*lne3)
+        
+    # eq. (4) - Normalized energy deposition
+    f = c[0]*y**c[1]*np.exp(-c[2]*y**c[3]) + c[4]*y**c[5]*np.exp(-c[6]*y**c[7])
+    
+    return f
+
+@jit(nopython=True)
+def iprmono(e, flux, rho, H):
+    # assign constants
+    epsilon = 0.035 # keV 
+
+    ipr = np.empty((e.size,rho.size))
+
+    for i,energy in enumerate(e): # loop over energy index
+
+        # step 1. (eq. 1) 
+        y = (2/energy)*(rho*H/6.0e-6)**0.7
+        f = np.empty(y.size)
+
+        for j,yy in enumerate(y):
+            f[j] = fang(yy, energy)
+
+        # calculate ipr (qtot) using eq. (3) for a specified flux at ea. energy
+        Qmono = flux[i]*energy # (keV cm−2 s−1)
+        ipr[i,:] = f*Qmono/(epsilon*H)
+
+    return ipr
+
+@jit(nopython=True)
+def calculate_ipr(glats, aps, alt, rho, H, e):
     ipr_vals = np.empty(shape=(len(aps),len(glats), len(e), len(alt)))
     for i in range(len(aps)):
         for j in range(len(glats)):
@@ -191,6 +247,8 @@ def calculate_ipr(glats, aps, alt=alt.values, rho=rho.values, H=H.values, e=e):
             ipr_vals[i, j, :, :] = ipr
             
     return ipr_vals
+
+jit_module(nopython=True, error_model="numpy")
 
 def calculate_iprm(glats, aps, times, alt, rho, H, e):
     """
@@ -239,6 +297,4 @@ def calculate_iprm(glats, aps, times, alt, rho, H, e):
     out_ds = out_ds.transpose("time", "pressure", "glat")
     
     return out_ds.sortby('pressure')
-
-jit_module(nopython=True, error_model="numpy")
 

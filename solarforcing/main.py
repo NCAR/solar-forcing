@@ -14,6 +14,7 @@ class FluxCalculation:
     max_lshell: float = 10.5
     lshell_spacing: float = 0.5
     data_dir: str = 'data/'
+    ap_file_url: str = 'ftp://ftp.gfz-potsdam.de/pub/home/obs/Kp_ap_Ap_SN_F107/Kp_ap_Ap_SN_F107_since_1932.txt'
     start_date: datetime = None
     end_date: datetime = None
     angle: float = 80.
@@ -25,7 +26,7 @@ class FluxCalculation:
         self.glat = calc.lshell_to_glat(self.lshell)
 
     def grab_data(self):
-        self.df = data_access.grab_potsdam_file(self.data_dir, self.start_date, self.end_date)
+        self.df = data_access.grab_potsdam_file(self.data_dir, self.ap_file_url, self.start_date, self.end_date)
         self.ap = self.df.ap.values
         self.time = self.df.index
         return self.df
@@ -39,11 +40,11 @@ class FluxCalculation:
         return self.vdk_flux
 
     def calculate_ipr(self):
-        standard_atmosphere = data_access(self.standard_atmosphere_path)
+        standard_atmosphere = data_access.read_atm(self.standard_atmosphere_path)
         
         iprm_ds = calc.calculate_iprm(self.glat, self.ap, self.time,
-                                      standard_atmosphere.alt, standard_atmosphere.rho, 
-                                      standard_atmosphere.H, self.energy_grid)
+                                      standard_atmosphere.alt.values, standard_atmosphere.rho.values, 
+                                      standard_atmosphere.H.values, self.energy_grid)
         
         self.iprm_ds = iprm_ds
 
