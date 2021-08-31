@@ -41,8 +41,7 @@ class FluxCalculation:
 
     def calculate_ipr(self):
         standard_atmosphere = data_access.read_atm(self.standard_atmosphere_path)
-        
-        iprm_ds = calc.calculate_iprm(self.glat, self.ap, self.time,
+        iprm_ds = calc.calculate_iprm(self.vdk_flux, self.glat, self.ap, self.time,
                                       standard_atmosphere.alt.values, standard_atmosphere.rho.values, 
                                       standard_atmosphere.H.values, self.energy_grid)
         

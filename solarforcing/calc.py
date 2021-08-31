@@ -3,6 +3,7 @@ from numba import jit, jit_module
 import pydantic
 from datetime import datetime
 from scipy import integrate
+import xarray as xr
 
 @jit(nopython=True)
 def gen_energy_grid(nbins, min_e=30., max_e=1000.):
@@ -227,35 +228,31 @@ def iprmono(e, flux, rho, H):
     return ipr
 
 @jit(nopython=True)
-def calculate_ipr(glats, aps, alt, rho, H, e):
+def calculate_ipr(fluxes, glats, aps, alt, rho, H, e):
     ipr_vals = np.empty(shape=(len(aps),len(glats), len(e), len(alt)))
     for i in range(len(aps)):
         for j in range(len(glats)):
-            l = 1.01 / np.cos(glats[j]*np.pi/180.)**2
-            # calculate the top of the atmosphere energetic electron energy spectrum
-            flux_sd = vdk2016(e, l, aps[i])
-            
-            # van de Kamp is per steradian (electrons / (cm2 sr s keV))
-            # assume flux is isotropic inside a nominal bounce loss cone (BLC) angle
-            # of 66.3˚. The area of the BLC in sr is 2pi(1-cosd(66.3))
-            flux = 2.*np.pi*(1-np.cos(np.radians(80))) * flux_sd
+            flux = fluxes[j, i, :]
 
             # calculate the IPR as a function f height and energy
             ipr = iprmono(e, flux, rho, H)
-            
+
             # Add the results to the ipr array
             ipr_vals[i, j, :, :] = ipr
+                
             
     return ipr_vals
 
 jit_module(nopython=True, error_model="numpy")
 
-def calculate_iprm(glats, aps, times, alt, rho, H, e):
+def calculate_iprm(fluxes, glats, aps, times, alt, rho, H, e):
     """
     Calculates iprm from a dataset
     
     Parameters
     ----------
+    fluxes: numpy.array
+      Array of flux data
     glats: numpy.array
       Array of geomagnetic latitudes
     aps: numpy.array
@@ -277,7 +274,7 @@ def calculate_iprm(glats, aps, times, alt, rho, H, e):
 
     """
     
-    ipr = calculate_ipr(glats, aps, alt=alt, rho=rho, H=H, e=e)
+    ipr = calculate_ipr(fluxes, glats, aps, alt, rho, H, e)
     
     # calculate ipr total by integrating across the energy spectrum
     ipr_tot = integrate.simps(ipr, e, axis=2)
@@ -293,7 +290,12 @@ def calculate_iprm(glats, aps, times, alt, rho, H, e):
                                        ap = (['time'], aps),
                                        glat = glats,
                                        pressure = plevs,
-                                       time=times))
+                                       time=('time', times)))
+    
+    print(out_ds)
+    if 'date' in out_ds.dims:
+        out_ds.drop(dim='date')
+    
     out_ds = out_ds.transpose("time", "pressure", "glat")
     
     return out_ds.sortby('pressure')
