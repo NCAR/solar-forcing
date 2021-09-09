@@ -11,4 +11,3 @@ dependencies:
     - numba
     - jupyterlab
     - pydantic
-    - datetime
