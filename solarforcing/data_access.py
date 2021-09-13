@@ -2,6 +2,7 @@ import os
 
 import urllib
 import pandas as pd
+import xarray as xr
 
 def grab_potsdam_file(data_dir = 'data/', url='ftp://ftp.gfz-potsdam.de/pub/home/obs/Kp_ap_Ap_SN_F107/Kp_ap_Ap_SN_F107_since_1932.txt', start_date=None, end_date=None):
     """Grabs solar weather data from potsdam ftp server
@@ -67,3 +68,43 @@ def read_atm(file):
     df = pd.DataFrame({'H':H, 'rho':rho, 'alt':alt})
 
     return df
+
+import os
+import pathlib
+
+import urllib
+import pandas as pd
+
+
+def grab_ssi_lasp_file(data_dir = 'data/', url='https://lasp.colorado.edu/lisird/resources/lasp/nrl2/v02r01/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc', start_date=None, end_date=None):
+    """Grabs solar irradiance data from LASP (https://lasp.colorado.edu/lisird/data/nrl2_files)
+    
+    Parameters
+    ----------
+    data_dir: `str`, optional
+       Data directory - by default, creates a "data" directory in the current directory
+    
+    start_date: `datetime`, optional
+       Start date, by default, set to None providing all values since 1932
+    
+    end_date: `datetime`, optional
+       End date, by default, set to None providing all values up to the current date
+    
+    """
+    
+    # Extract the filename which is being pulled in
+    path = pathlib.Path(url)
+    filename = path.stem + path.suffix
+    full_path = f'{data_dir}{filename}'
+    
+    # Check to see if the data directory exists, if not, create it
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+    
+    if not os.path.exists(full_path):
+        file, message = urllib.request.urlretrieve(url, full_path)
+        
+    ds = xr.open_dataset(full_path)
+    ds.attrs['data_source_files'] = os.path.abspath(full_path)
+    
+    return ds.drop_vars(['SSI_UNC'])

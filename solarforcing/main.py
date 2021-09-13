@@ -1,5 +1,6 @@
 import solarforcing.calc as calc
 import solarforcing.data_access as data_access
+import solarforcing.data_cleaning as data_cleaning
 import pydantic
 import numpy as np
 from datetime import datetime
@@ -76,4 +77,34 @@ class FluxCalculation:
         
         self.ds = xr.merge([ds, self.iprm_ds])
 
+        return self.ds
+    
+@pydantic.dataclasses.dataclass
+class SolarIrradiance:
+    data_dir: str = 'data/'
+    data_url: str = 'https://lasp.colorado.edu/lisird/resources/lasp/nrl2/v02r01/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc'
+    start_date: datetime = None
+    end_date: datetime = None
+    
+    def __post_init_post_parse__(self):
+        self.raw_ds = data_access.grab_ssi_lasp_file(self.data_dir, self.data_url, self.start_date, self.end_date)
+    
+    def generate_dataset(self):
+        
+        # Rename the variables
+        self.ds = data_cleaning.rename_variables(self.raw_ds)
+        
+        # Fix the times and add more date attributes
+        self.ds = data_cleaning.center_time(self.ds)
+        
+        # Add datesecond and date fields
+        self.ds = data_cleaning.add_datesec(self.ds)
+        self.ds = data_cleaning.add_date(self.ds)
+        
+        # Add global attributes
+        self.ds = data_cleaning.add_global_attrs(self.ds)
+        
+        # Scale SSI values
+        self.ds = data_cleaning.scale_ssi(self.ds)
+        
         return self.ds
