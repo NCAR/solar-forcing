@@ -69,13 +69,6 @@ def read_atm(file):
 
     return df
 
-import os
-import pathlib
-
-import urllib
-import pandas as pd
-
-
 def grab_ssi_lasp_file(data_dir = 'data/', url='https://lasp.colorado.edu/lisird/resources/lasp/nrl2/v02r01/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc', start_date=None, end_date=None):
     """Grabs solar irradiance data from LASP (https://lasp.colorado.edu/lisird/data/nrl2_files)
     
