@@ -1,0 +1,5 @@
+jupyter-book==0.10.2
+matplotlib
+numpy
+ghp-import
+pandas
