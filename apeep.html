@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medium-Energy Electron Forcing Comparison &#8212; CESM Solar Forcing</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Using the Revised API" href="simplified_api_example.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CESM Solar Forcing</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="simplified_api_example.html">
+   Using the Revised API
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Medium-Energy Electron Forcing Comparison
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/apeep.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/apeep.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-a-few-functions">
+   Setup a few functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-an-energy-spectrum-for-a-specific-l-shell-and-ap-calculation">
+     Calculating an energy spectrum for a specific l-shell and AP calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-an-energy-grid">
+     Generate an energy grid
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-how-energy-from-top-of-atmosphere-is-deposited-in-rest-of-atmosphere">
+     Calculate how energy from top of atmosphere is deposited in rest of atmosphere
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-standard-atmosphere-data">
+     Read in standard atmosphere data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applying-these-functions">
+   Applying these functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-the-results">
+   Plot the results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compare-with-cmip6-forcing-file">
+   Compare with CMIP6 Forcing File
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#take-a-look-at-a-solar-storm-from-april-2020">
+     Take a look at a solar storm from April 2020
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#take-a-look-at-the-ap-value-from-that-peak-time">
+     Take a look at the ap value from that peak time
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#take-a-look-at-a-vertical-profile-of-iprm-and-iprtot">
+   Take a look at a vertical profile of iprm and iprtot
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Medium-Energy Electron Forcing Comparison</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-a-few-functions">
+   Setup a few functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-an-energy-spectrum-for-a-specific-l-shell-and-ap-calculation">
+     Calculating an energy spectrum for a specific l-shell and AP calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-an-energy-grid">
+     Generate an energy grid
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-how-energy-from-top-of-atmosphere-is-deposited-in-rest-of-atmosphere">
+     Calculate how energy from top of atmosphere is deposited in rest of atmosphere
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-standard-atmosphere-data">
+     Read in standard atmosphere data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applying-these-functions">
+   Applying these functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-the-results">
+   Plot the results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compare-with-cmip6-forcing-file">
+   Compare with CMIP6 Forcing File
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#take-a-look-at-a-solar-storm-from-april-2020">
+     Take a look at a solar storm from April 2020
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#take-a-look-at-the-ap-value-from-that-peak-time">
+     Take a look at the ap value from that peak time
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#take-a-look-at-a-vertical-profile-of-iprm-and-iprtot">
+   Take a look at a vertical profile of iprm and iprtot
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="medium-energy-electron-forcing-comparison">
+<h1>Medium-Energy Electron Forcing Comparison<a class="headerlink" href="#medium-energy-electron-forcing-comparison" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<p>Use basic elements of the scientific python stack</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="setup-a-few-functions">
+<h2>Setup a few functions<a class="headerlink" href="#setup-a-few-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="calculating-an-energy-spectrum-for-a-specific-l-shell-and-ap-calculation">
+<h3>Calculating an energy spectrum for a specific l-shell and AP calculation<a class="headerlink" href="#calculating-an-energy-spectrum-for-a-specific-l-shell-and-ap-calculation" title="Permalink to this headline">¶</a></h3>
+<p>A routine (vdk2016) to return an energy spectrum for a specific l-shell and Ap
+Calcs based on:</p>
+<p><em><strong>van de Kamp, M., Seppälä, A., Clilverd, M. A., Rodger, C. J., Verronen, P. T., and Whittaker, I. C. (2016), A model providing long‐term datasets of energetic electron precipitation during geomagnetic storms, J. Geophys. Res. Atmos., 121, 12,520– 12,540, <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015JD024212">doi:10.1002/2015JD024212</a>.</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vdk2016</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">Ap</span><span class="p">):</span>
+
+    <span class="n">lpp</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.7430</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Ap</span><span class="p">)</span> <span class="o">+</span> <span class="mf">6.5257</span>
+    <span class="n">Spp</span> <span class="o">=</span> <span class="n">l</span> <span class="o">-</span> <span class="n">lpp</span>
+
+    <span class="c1"># vdK2016 eqn.(8)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="mf">8.2091</span><span class="o">*</span><span class="n">Ap</span><span class="o">**</span><span class="mf">0.16255</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">1.3754</span><span class="o">*</span><span class="n">Ap</span><span class="o">**</span><span class="mf">0.33042</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.13334</span><span class="o">*</span><span class="n">Ap</span><span class="o">**</span><span class="mf">0.42616</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">2.2833</span><span class="o">*</span><span class="n">Ap</span><span class="o">**-</span><span class="mf">0.22990</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mf">2.7563e-4</span><span class="o">*</span><span class="n">Ap</span><span class="o">**</span><span class="mf">2.6116</span>
+
+    <span class="c1"># integral flux &gt;30 keV (F30) electrons / (cm2 sr s)</span>
+    <span class="n">F30</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="n">Spp</span><span class="o">-</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">Spp</span><span class="o">-</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
+
+    <span class="c1"># vdK2016 eqn.(9)</span>
+
+    <span class="n">E</span> <span class="o">=</span> <span class="mf">3.3777</span><span class="o">*</span><span class="n">Ap</span><span class="o">**-</span><span class="mf">1.7038</span> <span class="o">+</span> <span class="mf">0.15</span>
+    <span class="n">bk</span> <span class="o">=</span> <span class="mf">3.7632</span><span class="o">*</span><span class="n">Ap</span><span class="o">**-</span><span class="mf">0.16034</span>
+    <span class="n">sk</span> <span class="o">=</span> <span class="mf">12.184</span><span class="o">*</span><span class="n">Ap</span><span class="o">**-</span><span class="mf">0.30111</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">E</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">bk</span><span class="o">*</span><span class="n">Spp</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.30450</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="mf">0.20098</span><span class="o">*</span><span class="p">(</span><span class="n">Spp</span><span class="o">-</span><span class="n">sk</span><span class="p">)))</span> <span class="o">-</span> <span class="mi">1</span>
+    
+    <span class="c1"># solve eqn 3 for C</span>
+    <span class="c1"># C is an offset, and k is the spectral gradient</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">F30</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="mf">1e3</span><span class="o">**</span><span class="n">x</span><span class="o">-</span><span class="mf">30.</span><span class="o">**</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="c1"># calcualte the spectral density of the flux S(E) = CE^k</span>
+    <span class="c1"># in electrons / (cm2 sr s keV)</span>
+    <span class="n">flux_spectral_density</span> <span class="o">=</span> <span class="n">e</span><span class="o">**</span><span class="n">k</span><span class="o">*</span><span class="n">c</span>
+    
+    <span class="k">return</span> <span class="n">flux_spectral_density</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generate-an-energy-grid">
+<h3>Generate an energy grid<a class="headerlink" href="#generate-an-energy-grid" title="Permalink to this headline">¶</a></h3>
+<p>Generate a grid of energies for the flux spectrum. The energy range of the spectrum was set at 30–1000 keV, with nbins of logarithmically spaced grid points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a grid of energies for the flux spectrum</span>
+<span class="c1"># The energy range of the spectrum was set at 30–1000 keV, </span>
+<span class="c1"># with nbins of logarithmically spaced grid points.</span>
+
+<span class="k">def</span> <span class="nf">gen_energy_grid</span><span class="p">(</span><span class="n">nbins</span><span class="p">):</span>
+
+    <span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">30.</span><span class="p">)</span>
+    <span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">1000.</span><span class="p">)</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">e1</span> <span class="o">+</span> <span class="p">(</span><span class="n">e2</span><span class="o">-</span><span class="n">e1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nbins</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">nbins</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">e</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="calculate-how-energy-from-top-of-atmosphere-is-deposited-in-rest-of-atmosphere">
+<h3>Calculate how energy from top of atmosphere is deposited in rest of atmosphere<a class="headerlink" href="#calculate-how-energy-from-top-of-atmosphere-is-deposited-in-rest-of-atmosphere" title="Permalink to this headline">¶</a></h3>
+<p>The function takes the energy spectrum at the top of the atmosphere and
+calculates how that energy is deposited in the atmosphere using the parameterization
+described in <a class="reference external" href="https://opensky.ucar.edu/islandora/object/articles:10653">Fang et al., (2010)</a></p>
+<p><em><strong>Fang, X., C. E. Randall, D. Lummerzheim, W. Wang, G. Lu, S. C. Solomon,
+and R. A. Frahm (2010), Parameterization of monoenergetic electron impact
+ionization, Geophys. Res. Lett., 37, L22106, <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2010GL045406">doi:10.1029/2010GL045406.</a></strong></em></p>
+<p>Application of the new parameterization requires the following steps:</p>
+<ol class="simple">
+<li><p>Calculate the Ci coefficients using equation (5) and Table 1.</p></li>
+<li><p>Calculate the y values throughout the atmosphere using equation (1).</p></li>
+<li><p>Calculate the normalized energy dissipation f values using equation (4).</p></li>
+<li><p>Obtain the altitude profile of qtot by substituting the f values into equation (3).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fang</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Emono</span><span class="p">):</span>
+<span class="c1"># Input: </span>
+<span class="c1"># y - normalized atmospheric column mass as a function of vertical location (z)</span>
+<span class="c1"># Emono - is incident electron energy (keV)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># f - quanity calculated by eqn. (4)</span>
+
+    <span class="c1"># Table 1.</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mf">1.24616E+0</span><span class="p">,</span>  <span class="mf">1.45903E+0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.42269E-1</span><span class="p">,</span>  <span class="mf">5.95459E-2</span><span class="p">),</span> 
+                   <span class="p">(</span><span class="mf">2.23976E+0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.22918E-7</span><span class="p">,</span>  <span class="mf">1.36458E-2</span><span class="p">,</span>  <span class="mf">2.53332E-3</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">1.41754E+0</span><span class="p">,</span>  <span class="mf">1.44597E-1</span><span class="p">,</span>  <span class="mf">1.70433E-2</span><span class="p">,</span>  <span class="mf">6.39717E-4</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">2.48775E-1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.50890E-1</span><span class="p">,</span>  <span class="mf">6.30894E-9</span><span class="p">,</span>  <span class="mf">1.23707E-3</span><span class="p">),</span>
+                   <span class="p">(</span><span class="o">-</span><span class="mf">4.65119E-1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05081E-1</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.95701E-2</span><span class="p">,</span>  <span class="mf">1.22450E-2</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">3.86019E-1</span><span class="p">,</span>  <span class="mf">1.75430E-3</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.42960E-4</span><span class="p">,</span>  <span class="mf">4.60881E-4</span><span class="p">),</span>
+                   <span class="p">(</span><span class="o">-</span><span class="mf">6.45454E-1</span><span class="p">,</span>  <span class="mf">8.49555E-4</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.28581E-2</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.99302E-3</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">9.48930E-1</span><span class="p">,</span>  <span class="mf">1.97385E-1</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.50660E-3</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.06938E-3</span><span class="p">)])</span>
+
+    <span class="c1"># terms in eq. (5)</span>
+    <span class="n">lne</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Emono</span><span class="p">)</span>
+    <span class="n">lne2</span> <span class="o">=</span> <span class="n">lne</span><span class="o">*</span><span class="n">lne</span>
+    <span class="n">lne3</span> <span class="o">=</span> <span class="n">lne</span><span class="o">*</span><span class="n">lne2</span>
+
+    <span class="c1"># step 2. calculate the C array in (5)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">lne</span> <span class="o">+</span> <span class="n">p1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">lne2</span> <span class="o">+</span> <span class="n">p1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">lne3</span><span class="p">)</span>
+        
+    <span class="c1"># eq. (4) - Normalized energy deposition</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">c</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">c</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="read-in-standard-atmosphere-data">
+<h3>Read in standard atmosphere data<a class="headerlink" href="#read-in-standard-atmosphere-data" title="Permalink to this headline">¶</a></h3>
+<p>Read in the Atmospheric density (rho) and temperature
+return rho and the scale height (H) as a function of altitude</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_atm</span><span class="p">():</span>
+    
+    <span class="c1"># assign constants</span>
+    <span class="n">kboltz</span> <span class="o">=</span> <span class="mf">1.380649e-23</span> <span class="c1"># (J/K)</span>
+    <span class="n">amu</span> <span class="o">=</span> <span class="mf">1.6605e-27</span> <span class="c1"># (kg)    </span>
+    <span class="n">grav</span> <span class="o">=</span> <span class="mf">9.8</span> <span class="c1"># m/s2</span>
+
+    <span class="c1"># read msis atmosphere</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">&#39;../data/msis2.0_atm_out.txt&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;\s+&#39;</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span>
+    <span class="n">alt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;alt&#39;</span><span class="p">]</span>
+    
+    <span class="c1"># calculate H, the scale height (cm)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">kboltz</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="p">(</span><span class="mf">28.6</span><span class="o">*</span><span class="n">amu</span><span class="o">*</span><span class="n">grav</span><span class="p">)</span><span class="o">*</span><span class="mf">1e2</span> 
+
+    <span class="k">return</span> <span class="n">H</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">alt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iprmono</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+    <span class="c1"># assign constants</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.035</span> <span class="c1"># keV </span>
+
+    <span class="n">ipr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">e</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">rho</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">energy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">e</span><span class="p">):</span> <span class="c1"># loop over energy index</span>
+
+        <span class="c1"># step 1. (eq. 1) </span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">energy</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">H</span><span class="o">/</span><span class="mf">6.0e-6</span><span class="p">)</span><span class="o">**</span><span class="mf">0.7</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="n">f</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">fang</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+
+        <span class="c1"># calculate ipr (qtot) using eq. (3) for a specified flux at ea. energy</span>
+        <span class="n">Qmono</span> <span class="o">=</span> <span class="n">flux</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">energy</span> <span class="c1"># (keV cm−2 s−1)</span>
+        <span class="n">ipr</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="n">Qmono</span><span class="o">/</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">H</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ipr</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="applying-these-functions">
+<h2>Applying these functions<a class="headerlink" href="#applying-these-functions" title="Permalink to this headline">¶</a></h2>
+<p>Create an energy grid for the energy flux between 30 and 1000 keV</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nbins</span> <span class="o">=</span> <span class="mi">128</span> <span class="c1"># sets resolution of the grid</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">gen_energy_grid</span><span class="p">(</span><span class="n">nbins</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read in the Atmospheric density and scale height as a function of altitude</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">H</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">alt</span> <span class="o">=</span> <span class="n">read_atm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The geomagnetic conditions (Ap) and location (l-shell) for </span>
+<span class="c1"># the IPR calculation</span>
+<span class="n">Ap</span> <span class="o">=</span> <span class="mf">54.625</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mf">5.163</span>
+
+<span class="c1"># calculate the top of the atmosphere energetic electron energy spectrum</span>
+<span class="n">flux_sd</span> <span class="o">=</span> <span class="n">vdk2016</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">Ap</span><span class="p">)</span>
+
+<span class="c1"># van de Kamp is per steradian (electrons / (cm2 sr s keV))</span>
+<span class="c1"># assume flux is isotropic inside a nominal bounce loss cone (BLC) angle</span>
+<span class="c1"># of 66.3˚. The area of the BLC in sr is 2pi(1-cosd(66.3))</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mf">66.3</span><span class="p">)))</span> <span class="o">*</span> <span class="n">flux_sd</span>
+
+<span class="c1"># calculate the IPR as a function f height and energy</span>
+<span class="n">ipr</span> <span class="o">=</span> <span class="n">iprmono</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span>
+
+<span class="c1"># integrate across the energy range to get total IPR</span>
+<span class="n">iprtot</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">ipr</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-the-results">
+<h2>Plot the results<a class="headerlink" href="#plot-the-results" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the input energy spectrum, IPR(E) and total IPR</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># plot the returned spectrum</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">flux</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Energy (keV)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;electrons/(cm2 sr s keV)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ap=54.6 l=5.16&quot;</span><span class="p">)</span>
+
+<span class="c1"># plot selected IPRs at various energies</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">ipr</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span>  <span class="n">alt</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">ipr</span><span class="p">[</span><span class="mi">43</span><span class="p">,:],</span> <span class="n">alt</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="mi">43</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">ipr</span><span class="p">[</span><span class="mi">86</span><span class="p">,:],</span> <span class="n">alt</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="mi">86</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">ipr</span><span class="p">[</span><span class="mi">127</span><span class="p">,:],</span> <span class="n">alt</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="mi">127</span><span class="p">])</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span><span class="mf">1e3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># plot selected IPRs at various energies</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">iprtot</span><span class="p">,</span><span class="n">alt</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span><span class="mf">1e4</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/apeep_18_0.png" src="_images/apeep_18_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="compare-with-cmip6-forcing-file">
+<h2>Compare with CMIP6 Forcing File<a class="headerlink" href="#compare-with-cmip6-forcing-file" title="Permalink to this headline">¶</a></h2>
+<p>Open the <a class="reference external" href="https://solarisheppa.geomar.de/">HEPPA SOLARIS</a> forcing file using xarray</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;/glade/work/marsh/ref_data/solar/solarforcing-REFD1-day_input4MIPs_solar_CCMI-2022_SOLARIS-HEPPA-3-2_gn_19500101-20191231.nc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In a centered dipole magnetic field model, the path along a given L shell can be described as r=L<span class="math notranslate nohighlight">\(\cos ^{2}\lambda\)</span>
+where r is the radial distance (in planetary radii) to a point on the line <span class="math notranslate nohighlight">\(\lambda\)</span> is its geomagnetic latitude, and L is the L-shell of interest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glat</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;glat&#39;</span><span class="p">]</span>
+<span class="n">lshell</span> <span class="o">=</span> <span class="mf">1.01</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">glat</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="take-a-look-at-a-solar-storm-from-april-2020">
+<h3>Take a look at a solar storm from April 2020<a class="headerlink" href="#take-a-look-at-a-solar-storm-from-april-2020" title="Permalink to this headline">¶</a></h3>
+<p>Notice the maximum IPR at maximum in Ap - they are aligned!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span>
+
+<span class="n">ds</span><span class="p">[</span><span class="s1">&#39;iprm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2010-03-15T12:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-04-25T12:00:00&quot;</span><span class="p">),</span><span class="n">glat</span><span class="o">=</span><span class="mf">63.750</span><span class="p">,)</span>\
+    <span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">plev</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">1e7</span><span class="p">,</span><span class="mf">3e12</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;IPRM&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>  <span class="c1"># instantiate a second axes that shares the same x-axis</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:red&#39;</span>
+
+<span class="n">ds</span><span class="p">[</span><span class="s1">&#39;ap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2010-03-15T12:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-04-25T12:00:00&quot;</span><span class="p">))</span> \
+        <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;ap&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/apeep_25_0.png" src="_images/apeep_25_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="take-a-look-at-the-ap-value-from-that-peak-time">
+<h3>Take a look at the ap value from that peak time<a class="headerlink" href="#take-a-look-at-the-ap-value-from-that-peak-time" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select maximum in geomagnetic storm in April 2010</span>
+<span class="n">storm_date</span> <span class="o">=</span> <span class="s2">&quot;2010-04-05T12:00:00&quot;</span>
+
+<span class="n">ap</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;ap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">storm_date</span><span class="p">)</span>
+<span class="n">iprm</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;iprm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">storm_date</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ap:&#39;</span><span class="p">,</span> <span class="n">ap</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ap: 54.625
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">iprm</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1">#control the look of the output</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mf">1e-5</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Pressure (hPa)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/apeep_28_0.png" src="_images/apeep_28_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">iy</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">glat</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%2i</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%.5e</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">iy</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lshell</span><span class="p">[</span><span class="n">iy</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">iprm</span><span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="n">iy</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">iprm</span><span class="p">[</span><span class="mi">9</span><span class="p">,:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># IPRM only calculated for l-shells between 10 and 2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0   -82.500    59.282 0.00000e+00 
+ 1   -72.938    11.732 0.00000e+00 
+ 2   -70.188     8.792 6.42260e+11 
+ 3   -68.500     7.519 1.12311e+12 
+ 4   -66.250     6.227 1.64548e+12 
+ 5   -63.750     5.163 1.91807e+12 
+ 6   -61.250     4.366 1.71395e+12 
+ 7   -58.750     3.753 5.20478e+11 
+ 8   -55.938     3.220 6.77236e+10 
+ 9   -52.188     2.687 2.02846e+09 
+10   -47.500     2.213 1.38501e+08 
+11   -42.500     1.858 0.00000e+00 
+12   -37.500     1.605 0.00000e+00 
+13   -32.500     1.420 0.00000e+00 
+14   -25.000     1.230 0.00000e+00 
+15   -10.000     1.041 0.00000e+00 
+16    10.000     1.041 0.00000e+00 
+17    25.000     1.230 0.00000e+00 
+18    32.500     1.420 0.00000e+00 
+19    37.500     1.605 0.00000e+00 
+20    42.500     1.858 0.00000e+00 
+21    47.500     2.213 1.38501e+08 
+22    52.188     2.687 2.02846e+09 
+23    55.938     3.220 6.77235e+10 
+24    58.750     3.753 5.20476e+11 
+25    61.250     4.366 1.71394e+12 
+26    63.750     5.163 1.91806e+12 
+27    66.250     6.227 1.64546e+12 
+28    68.500     7.519 1.12309e+12 
+29    70.188     8.792 6.42248e+11 
+30    72.938    11.732 0.00000e+00 
+31    82.500    59.282 0.00000e+00 
+</pre></div>
+</div>
+<img alt="_images/apeep_29_1.png" src="_images/apeep_29_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="take-a-look-at-a-vertical-profile-of-iprm-and-iprtot">
+<h2>Take a look at a vertical profile of iprm and iprtot<a class="headerlink" href="#take-a-look-at-a-vertical-profile-of-iprm-and-iprtot" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare iprm to iprtot from calculation above (note scaling!)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span>
+
+<span class="n">ref</span> <span class="o">=</span> <span class="n">iprm</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">glat</span><span class="o">=</span><span class="mf">63.750</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;l-shell:&#39;</span><span class="p">,</span> <span class="n">lshell</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">glat</span><span class="o">=</span><span class="mf">63.750</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ap:&#39;</span><span class="p">,</span> <span class="n">ap</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;plev&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;HEPPA reference&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;IPRM&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mf">1e-6</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Pressure (hPa)&#39;</span><span class="p">)</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:red&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iprtot</span><span class="o">/</span><span class="n">rho</span><span class="p">,</span><span class="mf">1013.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alt</span><span class="o">/</span><span class="mf">6.8</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NEW&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>l-shell: 5.163090118854937
+ap: 54.625
+</pre></div>
+</div>
+<img alt="_images/apeep_31_1.png" src="_images/apeep_31_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-miniconda3-default-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-miniconda3-default-py",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-miniconda3-default-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="simplified_api_example.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Using the Revised API</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Max Grover<br/>
+    
+        &copy; Copyright 2020.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

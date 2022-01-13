@@ -1,0 +1,2495 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using the Revised API &#8212; CESM Solar Forcing</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Medium-Energy Electron Forcing Comparison" href="apeep.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">CESM Solar Forcing</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
+   Using the Revised API
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="apeep.html">
+   Medium-Energy Electron Forcing Comparison
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/simplified_api_example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/simplified_api_example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accessing-the-flux-calculations-ipr-iprm">
+   Accessing the Flux Calculations (ipr, iprm)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-fluxcalculation">
+     Investigate
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       FluxCalculation
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bringing-in-the-data">
+     1) Bringing in the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-the-vdk2016-flux">
+     2) Calculating the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       vdk2016
+      </span>
+     </code>
+     flux
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-an-xarray-dataset">
+     3) Generate an
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xarray.Dataset
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#skipping-to-the-last-step">
+   Skipping to the last step
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accessing-solar-irradiance-data">
+   Accessing Solar Irradiance Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#additional-imports">
+     Additional Imports
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-the-solarirradiance-object">
+     Investigate the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SolarIrradiance
+      </span>
+     </code>
+     Object
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grab-the-data-by-instantiating-the-solarirradiance-object">
+     Grab the data by instantiating the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SolarIrradiance
+      </span>
+     </code>
+     object
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#apply-the-data-cleaning-and-calculations">
+     Apply the Data Cleaning and Calculations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-the-resulting-dataset">
+     Investigate the Resulting Dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Using the Revised API</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accessing-the-flux-calculations-ipr-iprm">
+   Accessing the Flux Calculations (ipr, iprm)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-fluxcalculation">
+     Investigate
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       FluxCalculation
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bringing-in-the-data">
+     1) Bringing in the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculating-the-vdk2016-flux">
+     2) Calculating the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       vdk2016
+      </span>
+     </code>
+     flux
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-an-xarray-dataset">
+     3) Generate an
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xarray.Dataset
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#skipping-to-the-last-step">
+   Skipping to the last step
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accessing-solar-irradiance-data">
+   Accessing Solar Irradiance Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#additional-imports">
+     Additional Imports
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-the-solarirradiance-object">
+     Investigate the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SolarIrradiance
+      </span>
+     </code>
+     Object
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grab-the-data-by-instantiating-the-solarirradiance-object">
+     Grab the data by instantiating the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SolarIrradiance
+      </span>
+     </code>
+     object
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#apply-the-data-cleaning-and-calculations">
+     Apply the Data Cleaning and Calculations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigate-the-resulting-dataset">
+     Investigate the Resulting Dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="using-the-revised-api">
+<h1>Using the Revised API<a class="headerlink" href="#using-the-revised-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<p>Before starting up this notebook, go to the main directory (one up from this one) and use</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> which install the <code class="docutils literal notranslate"><span class="pre">solarforcing</span></code> package to your environment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">solarforcing</span> <span class="kn">import</span> <span class="n">FluxCalculation</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-the-flux-calculations-ipr-iprm">
+<h2>Accessing the Flux Calculations (ipr, iprm)<a class="headerlink" href="#accessing-the-flux-calculations-ipr-iprm" title="Permalink to this headline">¶</a></h2>
+<p>Now, the functions found in the various notebooks have been built into a few main modules. They include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://calc.py">calc.py</a> - this contains the main calculations (ex. <code class="docutils literal notranslate"><span class="pre">vdk2016</span></code>, <code class="docutils literal notranslate"><span class="pre">lshell_to_glat</span></code>)</p></li>
+<li><p>data_access.py - this includes a helper function <code class="docutils literal notranslate"><span class="pre">grab_potsdam_file</span></code> which grabs the ap data file</p></li>
+<li><p><a class="reference external" href="http://main.py">main.py</a> - this contains the <code class="docutils literal notranslate"><span class="pre">FluxCalculation</span></code> class which brings this all together</p></li>
+</ul>
+<p>Let’s take a look at the “high level” api</p>
+<div class="section" id="investigate-fluxcalculation">
+<h3>Investigate <code class="docutils literal notranslate"><span class="pre">FluxCalculation</span></code><a class="headerlink" href="#investigate-fluxcalculation" title="Permalink to this headline">¶</a></h3>
+<p>We see that this is full of defaults - feel free to change any of these by feeding in your desired value</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>FluxCalculation<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">Init signature:</span>
+FluxCalculation<span class=" -Color -Color-Blue">(</span>
+    nbins_e<span class=" -Color -Color-Blue">:</span> int <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">128</span><span class=" -Color -Color-Blue">,</span>
+    min_e<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">30.0</span><span class=" -Color -Color-Blue">,</span>
+    max_e<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">1000.0</span><span class=" -Color -Color-Blue">,</span>
+    min_lshell<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">2.0</span><span class=" -Color -Color-Blue">,</span>
+    max_lshell<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">10.5</span><span class=" -Color -Color-Blue">,</span>
+    lshell_spacing<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">0.5</span><span class=" -Color -Color-Blue">,</span>
+    data_dir<span class=" -Color -Color-Blue">:</span> str <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;data/&#39;,</span>
+    ap_file_url<span class=" -Color -Color-Blue">:</span> str <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;ftp://ftp.gfz-potsdam.de/pub/home/obs/Kp_ap_Ap_SN_F107/Kp_ap_Ap_SN_F107_since_1932.txt&#39;,</span>
+    start_date<span class=" -Color -Color-Blue">:</span> datetime<span class=" -Color -Color-Blue">.</span>datetime <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    end_date<span class=" -Color -Color-Blue">:</span> datetime<span class=" -Color -Color-Blue">.</span>datetime <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    angle<span class=" -Color -Color-Blue">:</span> float <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">80.0</span><span class=" -Color -Color-Blue">,</span>
+    standard_atmosphere_path<span class=" -Color -Color-Blue">:</span> str <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;../data/msis2.0_atm_out.txt&#39;,</span>
+<span class=" -Color -Color-Blue">)</span> <span class=" -Color -Color-Blue">-&gt;</span> <span class=" -Color -Color-Green">None</span>
+<span class=" -Color -Color-Red">Docstring:</span>      FluxCalculation(nbins_e: int = 128, min_e: float = 30.0, max_e: float = 1000.0, min_lshell: float = 2.0, max_lshell: float = 10.5, lshell_spacing: float = 0.5, data_dir: str = &#39;data/&#39;, ap_file_url: str = &#39;ftp://ftp.gfz-potsdam.de/pub/home/obs/Kp_ap_Ap_SN_F107/Kp_ap_Ap_SN_F107_since_1932.txt&#39;, start_date: datetime.datetime = None, end_date: datetime.datetime = None, angle: float = 80.0, standard_atmosphere_path: str = &#39;../data/msis2.0_atm_out.txt&#39;)
+<span class=" -Color -Color-Red">File:</span>           ~/git_repos/solar-forcing/solarforcing/main.py
+<span class=" -Color -Color-Red">Type:</span>           type
+<span class=" -Color -Color-Red">Subclasses:</span>     
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux</span> <span class="o">=</span> <span class="n">FluxCalculation</span><span class="p">(</span><span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bringing-in-the-data">
+<h3>1) Bringing in the data<a class="headerlink" href="#bringing-in-the-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux</span><span class="o">.</span><span class="n">grab_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ap</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-01</th>
+      <td>30.125</td>
+    </tr>
+    <tr>
+      <th>2000-01-02</th>
+      <td>16.500</td>
+    </tr>
+    <tr>
+      <th>2000-01-03</th>
+      <td>12.000</td>
+    </tr>
+    <tr>
+      <th>2000-01-04</th>
+      <td>12.875</td>
+    </tr>
+    <tr>
+      <th>2000-01-05</th>
+      <td>19.250</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2014-12-27</th>
+      <td>6.250</td>
+    </tr>
+    <tr>
+      <th>2014-12-28</th>
+      <td>8.500</td>
+    </tr>
+    <tr>
+      <th>2014-12-29</th>
+      <td>20.875</td>
+    </tr>
+    <tr>
+      <th>2014-12-30</th>
+      <td>14.875</td>
+    </tr>
+    <tr>
+      <th>2014-12-31</th>
+      <td>7.625</td>
+    </tr>
+  </tbody>
+</table>
+<p>5479 rows × 1 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="calculating-the-vdk2016-flux">
+<h3>2) Calculating the <code class="docutils literal notranslate"><span class="pre">vdk2016</span></code> flux<a class="headerlink" href="#calculating-the-vdk2016-flux" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux</span><span class="o">.</span><span class="n">calculate_flux</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[2.28534529e-01, 2.21839226e-01, 2.15340073e-01, ...,
+         5.55605092e-03, 5.39327708e-03, 5.23527197e-03],
+        [6.85592696e-02, 6.66632579e-02, 6.48196807e-02, ...,
+         2.05878145e-03, 2.00184570e-03, 1.94648451e-03],
+        [4.45198300e-02, 4.33005557e-02, 4.21146739e-02, ...,
+         1.38372591e-03, 1.34582951e-03, 1.30897098e-03],
+        ...,
+        [1.02388797e-01, 9.95163438e-02, 9.67244759e-02, ...,
+         2.92078163e-03, 2.83884096e-03, 2.75919907e-03],
+        [5.88091580e-02, 5.71894725e-02, 5.56143954e-02, ...,
+         1.79199227e-03, 1.74263833e-03, 1.69464366e-03],
+        [2.85765076e-02, 2.77974576e-02, 2.70396459e-02, ...,
+         9.02608942e-04, 8.78002102e-04, 8.54066091e-04]],
+
+       [[2.36234665e+00, 2.28459531e+00, 2.20940298e+00, ...,
+         3.60205679e-02, 3.48350318e-02, 3.36885150e-02],
+        [4.13578225e-01, 4.01749237e-01, 3.90258576e-01, ...,
+         1.09959338e-02, 1.06814328e-02, 1.03759270e-02],
+        [2.17886872e-01, 2.11835623e-01, 2.05952432e-01, ...,
+         6.44499157e-03, 6.26599846e-03, 6.09197643e-03],
+        ...,
+        [7.43908926e-01, 7.21784182e-01, 7.00317456e-01, ...,
+         1.70792441e-02, 1.65712869e-02, 1.60784369e-02],
+        [3.29801453e-01, 3.20481768e-01, 3.11425443e-01, ...,
+         9.16427032e-03, 8.90530204e-03, 8.65365180e-03],
+        [1.10341513e-01, 1.07324211e-01, 1.04389417e-01, ...,
+         3.44814174e-03, 3.35385189e-03, 3.26214040e-03]],
+
+       [[3.03516758e+01, 2.90997348e+01, 2.78994338e+01, ...,
+         1.56847420e-01, 1.50377804e-01, 1.44175045e-01],
+        [2.80106918e+00, 2.71291447e+00, 2.62753414e+00, ...,
+         5.14466619e-02, 4.98275425e-02, 4.82593796e-02],
+        [1.12998336e+00, 1.09712890e+00, 1.06522970e+00, ...,
+         2.82665690e-02, 2.74447137e-02, 2.66467540e-02],
+        ...,
+        [6.38486316e+00, 6.16529288e+00, 5.95327345e+00, ...,
+         8.04296963e-02, 7.76637841e-02, 7.49929894e-02],
+        [2.03308633e+00, 1.97104268e+00, 1.91089241e+00, ...,
+         4.22359025e-02, 4.09469904e-02, 3.96974120e-02],
+        [4.32624725e-01, 4.20656309e-01, 4.09018995e-01, ...,
+         1.29753814e-02, 1.26164219e-02, 1.22673929e-02]],
+
+       ...,
+
+       [[7.76806409e+04, 6.90653568e+04, 6.14055633e+04, ...,
+         3.22660114e-02, 2.86875026e-02, 2.55058735e-02],
+        [4.92082616e+04, 4.37555872e+04, 3.89071133e+04, ...,
+         2.07240539e-02, 1.84276607e-02, 1.63857265e-02],
+        [3.51622050e+04, 3.13552002e+04, 2.79603789e+04, ...,
+         2.11475729e-02, 1.88579294e-02, 1.68161852e-02],
+        ...,
+        [6.05235524e+04, 5.37738619e+04, 4.77769086e+04, ...,
+         2.30556070e-02, 2.04844061e-02, 1.81999500e-02],
+        [4.44114821e+04, 3.95179543e+04, 3.51636252e+04, ...,
+         2.04123827e-02, 1.81632219e-02, 1.61618874e-02],
+        [1.97146657e+04, 1.77145292e+04, 1.59173151e+04, ...,
+         3.07124275e-02, 2.75965214e-02, 2.47967372e-02]],
+
+       [[6.00055790e+04, 5.34346316e+04, 4.75832398e+04, ...,
+         3.03452172e-02, 2.70222457e-02, 2.40631583e-02],
+        [4.05225734e+04, 3.60041182e+04, 3.19894917e+04, ...,
+         1.54736259e-02, 1.37482447e-02, 1.22152515e-02],
+        [2.99889365e+04, 2.66863863e+04, 2.37475315e+04, ...,
+         1.39010982e-02, 1.23702312e-02, 1.10079518e-02],
+        ...,
+        [4.85899236e+04, 4.31790909e+04, 3.83707928e+04, ...,
+         1.89433147e-02, 1.68338422e-02, 1.49592745e-02],
+        [3.69906293e+04, 3.28748319e+04, 2.92169827e+04, ...,
+         1.46072834e-02, 1.29819902e-02, 1.15375368e-02],
+        [1.76617232e+04, 1.58125040e+04, 1.41569018e+04, ...,
+         1.74976520e-02, 1.56656114e-02, 1.40253892e-02]],
+
+       [[4.54724544e+04, 4.05892379e+04, 3.62304224e+04, ...,
+         3.09428988e-02, 2.76199888e-02, 2.46539209e-02],
+        [3.29300771e+04, 2.92618963e+04, 2.60023252e+04, ...,
+         1.27734314e-02, 1.13505603e-02, 1.00861870e-02],
+        [2.52887543e+04, 2.24757063e+04, 1.99755737e+04, ...,
+         1.00268943e-02, 8.91153155e-03, 7.92023852e-03],
+        ...,
+        [3.84232913e+04, 3.41816948e+04, 3.04083335e+04, ...,
+         1.71582555e-02, 1.52641337e-02, 1.35791063e-02],
+        [3.04246164e+04, 2.70307853e+04, 2.40155322e+04, ...,
+         1.15456694e-02, 1.02577633e-02, 9.11352152e-03],
+        [1.56771265e+04, 1.39928798e+04, 1.24895775e+04, ...,
+         1.06010004e-02, 9.46209913e-03, 8.44555387e-03]]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generate-an-xarray-dataset">
+<h3>3) Generate an <code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code><a class="headerlink" href="#generate-an-xarray-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux</span><span class="o">.</span><span class="n">generate_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:   (time: 5479, glat: 17, pressure: 101)
+Coordinates:
+  * glat      (glat) float64 44.71 50.53 54.53 57.51 ... 69.84 70.43 70.97 71.47
+  * pressure  (pressure) float64 0.649 0.5603 0.4837 ... 3.086e-07 2.664e-07
+  * time      (time) datetime64[ns] 2000-01-01 2000-01-02 ... 2014-12-31
+Data variables:
+    iprm      (time, glat, pressure) float64 0.001594 0.04147 ... 7.311e+10
+    ap        (time) float64 30.12 16.5 12.0 12.88 ... 8.5 20.88 14.88 7.625
+</pre></div>
+</div>
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:              (time: 5479, lshell: 17, e: 128, glat: 17, pressure: 101)
+Coordinates:
+  * time                 (time) datetime64[ns] 2000-01-01 ... 2014-12-31
+  * lshell               (lshell) float64 2.0 2.5 3.0 3.5 ... 8.5 9.0 9.5 10.0
+  * glat                 (glat) float64 44.71 50.53 54.53 ... 70.43 70.97 71.47
+  * e                    (e) float64 30.0 30.84 31.7 32.59 ... 946.3 972.8 1e+03
+  * pressure             (pressure) float64 2.664e-07 3.086e-07 ... 0.5603 0.649
+Data variables:
+    vdk_energy_spectrum  (lshell, time, e) float64 0.2285 0.2218 ... 0.008446
+    iprm                 (time, pressure, glat) float64 4.415e+06 ... 0.00284
+    ap                   (time) float64 30.12 16.5 12.0 ... 20.88 14.88 7.625
+Attributes:
+    description:  Flux calculation
+    units:        electrons / (cm2 s keV</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-e2a31e7c-ecaf-4d0e-9416-eccba01a08d8' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-e2a31e7c-ecaf-4d0e-9416-eccba01a08d8' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 5479</li><li><span class='xr-has-index'>lshell</span>: 17</li><li><span class='xr-has-index'>e</span>: 128</li><li><span class='xr-has-index'>glat</span>: 17</li><li><span class='xr-has-index'>pressure</span>: 101</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-e0b8c6af-67c7-4de4-941f-9e6b0ba5ee14' class='xr-section-summary-in' type='checkbox'  checked><label for='section-e0b8c6af-67c7-4de4-941f-9e6b0ba5ee14' class='xr-section-summary' >Coordinates: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2000-01-01 ... 2014-12-31</div><input id='attrs-e0937746-3f59-4ed5-9741-a7d4dd1d8875' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e0937746-3f59-4ed5-9741-a7d4dd1d8875' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6f848d9e-7612-4160-a656-87ca5ca6228c' class='xr-var-data-in' type='checkbox'><label for='data-6f848d9e-7612-4160-a656-87ca5ca6228c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2000-01-01T00:00:00.000000000&#x27;, &#x27;2000-01-02T00:00:00.000000000&#x27;,
+       &#x27;2000-01-03T00:00:00.000000000&#x27;, ..., &#x27;2014-12-29T00:00:00.000000000&#x27;,
+       &#x27;2014-12-30T00:00:00.000000000&#x27;, &#x27;2014-12-31T00:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lshell</span></div><div class='xr-var-dims'>(lshell)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.0 2.5 3.0 3.5 ... 9.0 9.5 10.0</div><input id='attrs-a08c01b9-c074-4803-bf82-6f355b458667' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a08c01b9-c074-4803-bf82-6f355b458667' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c623fcc9-799d-41ee-96df-49c88202a18c' class='xr-var-data-in' type='checkbox'><label for='data-c623fcc9-799d-41ee-96df-49c88202a18c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 2. ,  2.5,  3. ,  3.5,  4. ,  4.5,  5. ,  5.5,  6. ,  6.5,  7. ,  7.5,
+        8. ,  8.5,  9. ,  9.5, 10. ])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>glat</span></div><div class='xr-var-dims'>(glat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>44.71 50.53 54.53 ... 70.97 71.47</div><input id='attrs-e3c24629-51cd-41c9-a9f3-f58825eb5baa' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e3c24629-51cd-41c9-a9f3-f58825eb5baa' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-053660fb-00e7-4b9a-8e29-e65e24439267' class='xr-var-data-in' type='checkbox'><label for='data-053660fb-00e7-4b9a-8e29-e65e24439267' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([44.713516, 50.534762, 54.53329 , 57.507551, 59.834875, 61.721637,
+       63.291976, 64.625812, 65.777295, 66.784624, 67.675634, 68.471156,
+       69.187141, 69.836035, 70.427714, 70.970131, 71.469769])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>e</span></div><div class='xr-var-dims'>(e)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>30.0 30.84 31.7 ... 972.8 1e+03</div><input id='attrs-d24c98df-97be-4ceb-b4f5-70f2c0a93634' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d24c98df-97be-4ceb-b4f5-70f2c0a93634' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6944450f-49b8-430a-af66-ea96542fa25c' class='xr-var-data-in' type='checkbox'><label for='data-6944450f-49b8-430a-af66-ea96542fa25c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  30.      ,   30.839862,   31.703236,   32.590781,   33.503173,
+         34.441108,   35.4053  ,   36.396486,   37.41542 ,   38.46288 ,
+         39.539663,   40.646592,   41.78451 ,   42.954284,   44.156806,
+         45.392993,   46.663788,   47.97016 ,   49.313104,   50.693644,
+         52.112833,   53.571752,   55.071515,   56.613264,   58.198175,
+         59.827456,   61.502349,   63.224132,   64.994117,   66.813653,
+         68.684128,   70.606968,   72.583638,   74.615646,   76.704541,
+         78.851915,   81.059406,   83.328697,   85.661517,   88.059645,
+         90.52491 ,   93.059191,   95.664421,   98.342584,  101.095724,
+        103.92594 ,  106.835388,  109.826287,  112.900918,  116.061624,
+        119.310816,  122.65097 ,  126.084633,  129.614423,  133.24303 ,
+        136.973222,  140.807842,  144.749814,  148.802143,  152.967918,
+        157.250316,  161.652602,  166.178131,  170.830354,  175.612818,
+        180.529169,  185.583156,  190.77863 ,  196.119554,  201.61    ,
+        207.254152,  213.056315,  219.020912,  225.15249 ,  231.455724,
+        237.935419,  244.596517,  251.444094,  258.483372,  265.719717,
+        273.158647,  280.805832,  288.667104,  296.748455,  305.056046,
+        313.596212,  322.375464,  331.400494,  340.678183,  350.215605,
+        360.020031,  370.098936,  380.460003,  391.111133,  402.060446,
+        413.316289,  424.887243,  436.782131,  449.010022,  461.580237,
+        474.50236 ,  487.786243,  501.442014,  515.480084,  529.911155,
+        544.74623 ,  559.996618,  575.673947,  591.79017 ,  608.357572,
+        625.388786,  642.896795,  660.894947,  679.396966,  698.416955,
+        717.969417,  738.069258,  758.731802,  779.972802,  801.808453,
+        824.255401,  847.33076 ,  871.052124,  895.437576,  920.505709,
+        946.275634,  972.766999, 1000.      ])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>pressure</span></div><div class='xr-var-dims'>(pressure)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.664e-07 3.086e-07 ... 0.649</div><input id='attrs-3a0613e8-c7a4-4826-acf7-8b66cb4e84c8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3a0613e8-c7a4-4826-acf7-8b66cb4e84c8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-245c8719-952d-47ae-a0a7-7c2903f24228' class='xr-var-data-in' type='checkbox'><label for='data-245c8719-952d-47ae-a0a7-7c2903f24228' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([2.664306e-07, 3.086391e-07, 3.575344e-07, 4.141757e-07, 4.797903e-07,
+       5.557997e-07, 6.438506e-07, 7.458508e-07, 8.640100e-07, 1.000888e-06,
+       1.159451e-06, 1.343134e-06, 1.555916e-06, 1.802407e-06, 2.087949e-06,
+       2.418726e-06, 2.801905e-06, 3.245789e-06, 3.759994e-06, 4.355660e-06,
+       5.045693e-06, 5.845042e-06, 6.771026e-06, 7.843706e-06, 9.086323e-06,
+       1.052580e-05, 1.219332e-05, 1.412501e-05, 1.636272e-05, 1.895494e-05,
+       2.195782e-05, 2.543642e-05, 2.946611e-05, 3.413420e-05, 3.954181e-05,
+       4.580610e-05, 5.306280e-05, 6.146912e-05, 7.120719e-05, 8.248799e-05,
+       9.555591e-05, 1.106941e-04, 1.282305e-04, 1.485450e-04, 1.720778e-04,
+       1.993387e-04, 2.309184e-04, 2.675010e-04, 3.098791e-04, 3.589707e-04,
+       4.158396e-04, 4.817178e-04, 5.580326e-04, 6.464373e-04, 7.488472e-04,
+       8.674812e-04, 1.004909e-03, 1.164109e-03, 1.348530e-03, 1.562167e-03,
+       1.809649e-03, 2.096337e-03, 2.428443e-03, 2.813162e-03, 3.258829e-03,
+       3.775100e-03, 4.373159e-03, 5.065964e-03, 5.868525e-03, 6.798229e-03,
+       7.875218e-03, 9.122827e-03, 1.056808e-02, 1.224230e-02, 1.418175e-02,
+       1.642846e-02, 1.903109e-02, 2.204603e-02, 2.553861e-02, 2.958449e-02,
+       3.427133e-02, 3.970067e-02, 4.599013e-02, 5.327598e-02, 6.171607e-02,
+       7.149327e-02, 8.281938e-02, 9.593980e-02, 1.111388e-01, 1.287456e-01,
+       1.491418e-01, 1.727691e-01, 2.001396e-01, 2.318461e-01, 2.685757e-01,
+       3.111240e-01, 3.604129e-01, 4.175103e-01, 4.836531e-01, 5.602745e-01,
+       6.490343e-01])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c6efcf0b-0176-4e49-acb9-2f32c0d5a55e' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c6efcf0b-0176-4e49-acb9-2f32c0d5a55e' class='xr-section-summary' >Data variables: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>vdk_energy_spectrum</span></div><div class='xr-var-dims'>(lshell, time, e)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.2285 0.2218 ... 0.009462 0.008446</div><input id='attrs-2e1ca4fd-91b1-46bc-a32d-08e1861595bc' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2e1ca4fd-91b1-46bc-a32d-08e1861595bc' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0628a2ef-6cd0-4268-8836-7cb8613816ad' class='xr-var-data-in' type='checkbox'><label for='data-0628a2ef-6cd0-4268-8836-7cb8613816ad' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[2.28534529e-01, 2.21839226e-01, 2.15340073e-01, ...,
+         5.55605092e-03, 5.39327708e-03, 5.23527197e-03],
+        [6.85592696e-02, 6.66632579e-02, 6.48196807e-02, ...,
+         2.05878145e-03, 2.00184570e-03, 1.94648451e-03],
+        [4.45198300e-02, 4.33005557e-02, 4.21146739e-02, ...,
+         1.38372591e-03, 1.34582951e-03, 1.30897098e-03],
+        ...,
+        [1.02388797e-01, 9.95163438e-02, 9.67244759e-02, ...,
+         2.92078163e-03, 2.83884096e-03, 2.75919907e-03],
+        [5.88091580e-02, 5.71894725e-02, 5.56143954e-02, ...,
+         1.79199227e-03, 1.74263833e-03, 1.69464366e-03],
+        [2.85765076e-02, 2.77974576e-02, 2.70396459e-02, ...,
+         9.02608942e-04, 8.78002102e-04, 8.54066091e-04]],
+
+       [[2.36234665e+00, 2.28459531e+00, 2.20940298e+00, ...,
+         3.60205679e-02, 3.48350318e-02, 3.36885150e-02],
+        [4.13578225e-01, 4.01749237e-01, 3.90258576e-01, ...,
+         1.09959338e-02, 1.06814328e-02, 1.03759270e-02],
+        [2.17886872e-01, 2.11835623e-01, 2.05952432e-01, ...,
+         6.44499157e-03, 6.26599846e-03, 6.09197643e-03],
+...
+        [4.85899236e+04, 4.31790909e+04, 3.83707928e+04, ...,
+         1.89433147e-02, 1.68338422e-02, 1.49592745e-02],
+        [3.69906293e+04, 3.28748319e+04, 2.92169827e+04, ...,
+         1.46072834e-02, 1.29819902e-02, 1.15375368e-02],
+        [1.76617232e+04, 1.58125040e+04, 1.41569018e+04, ...,
+         1.74976520e-02, 1.56656114e-02, 1.40253892e-02]],
+
+       [[4.54724544e+04, 4.05892379e+04, 3.62304224e+04, ...,
+         3.09428988e-02, 2.76199888e-02, 2.46539209e-02],
+        [3.29300771e+04, 2.92618963e+04, 2.60023252e+04, ...,
+         1.27734314e-02, 1.13505603e-02, 1.00861870e-02],
+        [2.52887543e+04, 2.24757063e+04, 1.99755737e+04, ...,
+         1.00268943e-02, 8.91153155e-03, 7.92023852e-03],
+        ...,
+        [3.84232913e+04, 3.41816948e+04, 3.04083335e+04, ...,
+         1.71582555e-02, 1.52641337e-02, 1.35791063e-02],
+        [3.04246164e+04, 2.70307853e+04, 2.40155322e+04, ...,
+         1.15456694e-02, 1.02577633e-02, 9.11352152e-03],
+        [1.56771265e+04, 1.39928798e+04, 1.24895775e+04, ...,
+         1.06010004e-02, 9.46209913e-03, 8.44555387e-03]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>iprm</span></div><div class='xr-var-dims'>(time, pressure, glat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.415e+06 4.04e+07 ... 0.00284</div><input id='attrs-bfd8dc00-cc7c-4ce0-8a0f-7947c67e44c4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bfd8dc00-cc7c-4ce0-8a0f-7947c67e44c4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9c04ffa4-9255-47a4-a1f7-672bd9867909' class='xr-var-data-in' type='checkbox'><label for='data-9c04ffa4-9255-47a4-a1f7-672bd9867909' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[4.41532390e+06, 4.04019377e+07, 4.06693910e+08, ...,
+         3.49798386e+11, 2.74018029e+11, 2.12165614e+11],
+        [4.42795433e+06, 4.05133481e+07, 4.07739534e+08, ...,
+         3.50541298e+11, 2.74600725e+11, 2.12617669e+11],
+        [4.44082794e+06, 4.06268862e+07, 4.08804825e+08, ...,
+         3.51297678e+11, 2.75193987e+11, 2.13077923e+11],
+        ...,
+        [7.33698512e-01, 4.74617882e+00, 2.05635168e+01, ...,
+         4.07836615e+00, 3.83797770e+00, 3.91730617e+00],
+        [4.14702390e-02, 2.68109466e-01, 1.16004643e+00, ...,
+         2.27079638e-01, 2.13758858e-01, 2.18274925e-01],
+        [1.59383038e-03, 1.02992350e-02, 4.45111079e-02, ...,
+         8.61788513e-03, 8.11436509e-03, 8.28888891e-03]],
+
+       [[1.40514683e+06, 8.19029273e+06, 5.02252731e+07, ...,
+         2.21803074e+11, 1.81395918e+11, 1.47571542e+11],
+        [1.40923912e+06, 8.21389812e+06, 5.03657456e+07, ...,
+         2.22274186e+11, 1.81780970e+11, 1.47884825e+11],
+        [1.41341050e+06, 8.23795873e+06, 5.05089093e+07, ...,
+         2.22753840e+11, 1.82173002e+11, 1.48203787e+11],
+...
+        [2.36894880e-01, 1.21094926e+00, 5.57325564e+00, ...,
+         2.58091581e+00, 1.84604015e+00, 1.45893662e+00],
+        [1.33935359e-02, 6.84567544e-02, 3.14951407e-01, ...,
+         1.43725093e-01, 1.02777896e-01, 8.12210668e-02],
+        [5.14876661e-04, 2.63137353e-03, 1.21025697e-02, ...,
+         5.45519992e-03, 3.90026798e-03, 3.08206307e-03]],
+
+       [[5.94242958e+05, 2.28746980e+06, 8.86367912e+06, ...,
+         9.79245325e+10, 8.47370964e+10, 7.31127350e+10],
+        [5.95981257e+05, 2.29415491e+06, 8.88949054e+06, ...,
+         9.81344362e+10, 8.49181177e+10, 7.32685074e+10],
+        [5.97753188e+05, 2.30096934e+06, 8.91580085e+06, ...,
+         9.83481507e+10, 8.51024237e+10, 7.34271052e+10],
+        ...,
+        [1.19342161e-01, 4.55886908e-01, 1.71516827e+00, ...,
+         3.89878463e+00, 2.21788709e+00, 1.34203711e+00],
+        [6.74765103e-03, 2.57756804e-02, 9.69701017e-02, ...,
+         2.17511715e-01, 1.23651798e-01, 7.47784986e-02],
+        [2.59404094e-04, 9.90899282e-04, 3.72768013e-03, ...,
+         8.26842345e-03, 4.69782381e-03, 2.83965636e-03]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ap</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>30.12 16.5 12.0 ... 14.88 7.625</div><input id='attrs-f03ed7ee-2ec2-4657-9ee0-b8f1ed3a0eb3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f03ed7ee-2ec2-4657-9ee0-b8f1ed3a0eb3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4bd672ae-56c6-4e96-9107-14634301032e' class='xr-var-data-in' type='checkbox'><label for='data-4bd672ae-56c6-4e96-9107-14634301032e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([30.125, 16.5  , 12.   , ..., 20.875, 14.875,  7.625])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-4662970b-acc4-45eb-9583-f91ca5fa5e10' class='xr-section-summary-in' type='checkbox'  checked><label for='section-4662970b-acc4-45eb-9583-f91ca5fa5e10' class='xr-section-summary' >Attributes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>description :</span></dt><dd>Flux calculation</dd><dt><span>units :</span></dt><dd>electrons / (cm2 s keV</dd></dl></div></li></ul></div></div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="skipping-to-the-last-step">
+<h2>Skipping to the last step<a class="headerlink" href="#skipping-to-the-last-step" title="Permalink to this headline">¶</a></h2>
+<p>You do not neccessarily need to call of this in order - for example, if you wanted to generate the dataset right away, you can use the following block of code</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flux</span> <span class="o">=</span> <span class="n">FluxCalculation</span><span class="p">()</span>
+<span class="n">flux</span><span class="o">.</span><span class="n">generate_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="accessing-solar-irradiance-data">
+<h2>Accessing Solar Irradiance Data<a class="headerlink" href="#accessing-solar-irradiance-data" title="Permalink to this headline">¶</a></h2>
+<p>Another important dataset is solar irradiance (ssi) data from LASP - the data can be accessed on this site <a class="reference external" href="https://lasp.colorado.edu/lisird/data/nrl2_files">https://lasp.colorado.edu/lisird/data/nrl2_files</a>.</p>
+<p>The default dataset in this case is the daily output - this workflow has been migrated from its original state based on <a class="reference external" href="https://svn.code.sf.net/p/codescripts/code/trunk/ncl/solar/createSolarFileNRLSSI2.ncl">Mike Mill’s script</a></p>
+<div class="section" id="additional-imports">
+<h3>Additional Imports<a class="headerlink" href="#additional-imports" title="Permalink to this headline">¶</a></h3>
+<p>We will need to access the <code class="docutils literal notranslate"><span class="pre">SolarIrradiance</span></code> object from <code class="docutils literal notranslate"><span class="pre">solarforcing</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">solarforcing</span> <span class="kn">import</span> <span class="n">SolarIrradiance</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="investigate-the-solarirradiance-object">
+<h3>Investigate the <code class="docutils literal notranslate"><span class="pre">SolarIrradiance</span></code> Object<a class="headerlink" href="#investigate-the-solarirradiance-object" title="Permalink to this headline">¶</a></h3>
+<p>With this object, we need to specify:</p>
+<ul class="simple">
+<li><p>the data directory (<code class="docutils literal notranslate"><span class="pre">data_dir</span></code>)</p></li>
+<li><p>the data url (<code class="docutils literal notranslate"><span class="pre">data_url</span></code>), which is set to the most recent file from LASP by default</p></li>
+<li><p>start/end dates (<code class="docutils literal notranslate"><span class="pre">start_date</span></code>/<code class="docutils literal notranslate"><span class="pre">end_date</span></code>)</p></li>
+</ul>
+<p>SolarIrradiance?</p>
+</div>
+<div class="section" id="grab-the-data-by-instantiating-the-solarirradiance-object">
+<h3>Grab the data by instantiating the <code class="docutils literal notranslate"><span class="pre">SolarIrradiance</span></code> object<a class="headerlink" href="#grab-the-data-by-instantiating-the-solarirradiance-object" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irradiance</span> <span class="o">=</span> <span class="n">SolarIrradiance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now have a new variable attached to this object - <code class="docutils literal notranslate"><span class="pre">raw_ds</span></code> which is the original dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irradiance</span><span class="o">.</span><span class="n">raw_ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:                (time: 50769, wavelength: 3785, bounds: 2)
+Coordinates:
+  * wavelength             (wavelength) float32 115.5 116.5 ... 9.998e+04
+  * time                   (time) datetime64[ns] 1882-01-01 ... 2020-12-31
+Dimensions without coordinates: bounds
+Data variables:
+    SSI                    (time, wavelength) float32 ...
+    Wavelength_Band_Width  (wavelength) float32 1.0 1.0 1.0 ... 50.0 50.0 50.0
+    TSI                    (time) float32 1.361e+03 1.361e+03 ... 1.361e+03
+    TSI_UNC                (time) float32 0.4545 0.4814 0.4874 ... 0.1786 0.1577
+    time_bnds              (time, bounds) datetime64[ns] ...
+Attributes: (12/30)
+    Conventions:               CF-1.6, ACDD-1.3
+    title:                     Daily SSI calculated using NRL2 solar irradian...
+    source:                    NRLSSI2_v02r01
+    institution:               Naval Research Laboratory Space Science Divisi...
+    standard_name_vocabulary:  CF Standard Name Table v29
+    naming_authority:          gov.noaa.ncei
+    ...                        ...
+    creator_name:              Odele Coddington, Judith Lean, Peter Pilewskie...
+    history:                   This file supersedes version v02r00 data.
+    id:                        ssi_v02r01_daily_s18820101_e20201231_c20210218.nc
+    time_coverage_end:         2020-12-31
+    date_modified:             2021-02-18
+    data_source_files:         /glade/work/mgrover/git_repos/solar-forcing/no...</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-befc10fe-6aee-4591-8a48-c8bb1ab4a69a' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-befc10fe-6aee-4591-8a48-c8bb1ab4a69a' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 50769</li><li><span class='xr-has-index'>wavelength</span>: 3785</li><li><span>bounds</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-0916f883-2f0c-4d87-a650-c91f83f88d35' class='xr-section-summary-in' type='checkbox'  checked><label for='section-0916f883-2f0c-4d87-a650-c91f83f88d35' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>wavelength</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>115.5 116.5 ... 9.992e+04 9.998e+04</div><input id='attrs-8839355e-61d9-4f8f-9140-7f69cf4fac00' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-8839355e-61d9-4f8f-9140-7f69cf4fac00' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-be1f3811-a0d5-4d79-9fb6-d9cad37caa48' class='xr-var-data-in' type='checkbox'><label for='data-be1f3811-a0d5-4d79-9fb6-d9cad37caa48' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength grid center</dd><dt><span>units :</span></dt><dd>nm</dd><dt><span>standard_name :</span></dt><dd>radiation_wavelength</dd></dl></div><div class='xr-var-data'><pre>array([  115.5,   116.5,   117.5, ..., 99875. , 99925. , 99975. ],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1882-01-01 ... 2020-12-31</div><input id='attrs-416cee38-8f83-4102-b5f9-e09101599dc2' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-416cee38-8f83-4102-b5f9-e09101599dc2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c8e87070-1029-4aae-b9fa-d67090db6fa3' class='xr-var-data-in' type='checkbox'><label for='data-c8e87070-1029-4aae-b9fa-d67090db6fa3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>axis :</span></dt><dd>T</dd><dt><span>bounds :</span></dt><dd>time_bnds</dd></dl></div><div class='xr-var-data'><pre>array([&#x27;1882-01-01T00:00:00.000000000&#x27;, &#x27;1882-01-02T00:00:00.000000000&#x27;,
+       &#x27;1882-01-03T00:00:00.000000000&#x27;, ..., &#x27;2020-12-29T00:00:00.000000000&#x27;,
+       &#x27;2020-12-30T00:00:00.000000000&#x27;, &#x27;2020-12-31T00:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-2a4fa1b5-3dbd-4e13-a87b-4ab7bedc46d7' class='xr-section-summary-in' type='checkbox'  checked><label for='section-2a4fa1b5-3dbd-4e13-a87b-4ab7bedc46d7' class='xr-section-summary' >Data variables: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>SSI</span></div><div class='xr-var-dims'>(time, wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-dec8167b-1676-41a0-aa71-aea66e9b9ea3' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-dec8167b-1676-41a0-aa71-aea66e9b9ea3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b1618d07-e791-4992-a209-d74f84c653f2' class='xr-var-data-in' type='checkbox'><label for='data-b1618d07-e791-4992-a209-d74f84c653f2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Solar Spectral Irradiance (W m-2 nm-1)</dd><dt><span>standard_name :</span></dt><dd>solar_irradiance_per_unit_wavelength</dd><dt><span>units :</span></dt><dd>W m-2 nm-1</dd><dt><span>cell_methods :</span></dt><dd>time: mean</dd><dt><span>ancillary_variables :</span></dt><dd>SSI_UNC</dd></dl></div><div class='xr-var-data'><pre>[192160665 values with dtype=float32]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>Wavelength_Band_Width</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-82e616de-6ecb-48ef-add7-c1f915f88441' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-82e616de-6ecb-48ef-add7-c1f915f88441' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1940efa1-f21a-499a-b6d9-025e83195509' class='xr-var-data-in' type='checkbox'><label for='data-1940efa1-f21a-499a-b6d9-025e83195509' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength band width. Centered on wavelength.</dd><dt><span>units :</span></dt><dd>nm</dd></dl></div><div class='xr-var-data'><pre>array([ 1.,  1.,  1., ..., 50., 50., 50.], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>TSI</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-ef72569f-f538-4981-bc9a-ed47ed7bfd44' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-ef72569f-f538-4981-bc9a-ed47ed7bfd44' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-61da9cb2-1c75-4072-9869-ee3e6d7ccc46' class='xr-var-data-in' type='checkbox'><label for='data-61da9cb2-1c75-4072-9869-ee3e6d7ccc46' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Total Solar Irradiance (W m-2)</dd><dt><span>standard_name :</span></dt><dd>solar_irradiance</dd><dt><span>units :</span></dt><dd>W m-2</dd><dt><span>cell_methods :</span></dt><dd>time: mean</dd><dt><span>ancillary_variables :</span></dt><dd>TSI_UNC</dd></dl></div><div class='xr-var-data'><pre>array([1360.8076, 1360.844 , 1360.74  , ..., 1360.9497, 1360.9473, 1361.0659],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>TSI_UNC</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-5a4ec2a8-4340-496a-b690-2fc8678048d2' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5a4ec2a8-4340-496a-b690-2fc8678048d2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3833e727-17f3-475a-ad85-7491f9b7ca57' class='xr-var-data-in' type='checkbox'><label for='data-3833e727-17f3-475a-ad85-7491f9b7ca57' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Uncertainty in Daily Total Solar Irradiance (W m-2)</dd><dt><span>units :</span></dt><dd>W m-2</dd></dl></div><div class='xr-var-data'><pre>array([0.454469, 0.481399, 0.487415, ..., 0.195478, 0.178627, 0.157663],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>time_bnds</span></div><div class='xr-var-dims'>(time, bounds)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-f9819fdd-0bb3-4b42-b083-7c38cbab95f3' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-f9819fdd-0bb3-4b42-b083-7c38cbab95f3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-11557506-627a-4eb3-b0e1-d3139792decc' class='xr-var-data-in' type='checkbox'><label for='data-11557506-627a-4eb3-b0e1-d3139792decc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Minimum (inclusive) and maximum (exclusive) dates included in the time averaging</dd></dl></div><div class='xr-var-data'><pre>[101538 values with dtype=datetime64[ns]]</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c16467c4-2896-4fda-89d6-882c10ec6408' class='xr-section-summary-in' type='checkbox'  ><label for='section-c16467c4-2896-4fda-89d6-882c10ec6408' class='xr-section-summary' >Attributes: <span>(30)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.6, ACDD-1.3</dd><dt><span>title :</span></dt><dd>Daily SSI calculated using NRL2 solar irradiance model. Includes spectrally integrated (total) TSI value</dd><dt><span>source :</span></dt><dd>NRLSSI2_v02r01</dd><dt><span>institution :</span></dt><dd>Naval Research Laboratory Space Science Division and Laboratory for Atmospheric and Space Physics</dd><dt><span>standard_name_vocabulary :</span></dt><dd>CF Standard Name Table v29</dd><dt><span>naming_authority :</span></dt><dd>gov.noaa.ncei</dd><dt><span>date_created :</span></dt><dd>2017-09-30</dd><dt><span>license :</span></dt><dd>See Use Agreement for this CDR.</dd><dt><span>summary :</span></dt><dd>This dataset contains spectral solar irradiance as a function of time and wavelength created with the Naval Research Laboratory model for spectral and total irradiance. Spectral solar irradiance is the wavelength-dependent energy input to the top of the Earth’s atmosphere, at a standard distance of one Astronomical Unit from the Sun. Its units are W per m2 per nm. Also included is the value of total (spectrally integrated) solar irradiance in units W per m2. The dataset is created by Judith Lean (Space Science Division, Naval Research Laboratory), and Odele Coddington, Peter Pilewskie, Martin Snow, Chris Lindholm, and Doug Lindholm (Laboratory for Atmospheric and Space Science, University of Colorado), and NOAA CDR Program.</dd><dt><span>keywords :</span></dt><dd>Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Incoming Solar Radiation, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Irradiance, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Radiation, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Paleoclimate &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Sunspot Activity &amp;gt; Solar Flux, Earth Science &amp;gt; Climate Indicators &amp;gt; Paleoclimate Indicators &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance</dd><dt><span>keywords_vocabulary :</span></dt><dd>Global Change Master Directory (GCMD) Science and Services Keywords</dd><dt><span>cdm_data_type :</span></dt><dd>Any</dd><dt><span>time_coverage_start :</span></dt><dd>1882-01-01</dd><dt><span>program :</span></dt><dd>NOAA Climate Data Record Program</dd><dt><span>cdr_variable :</span></dt><dd>SSI, TSI</dd><dt><span>metadata_link :</span></dt><dd>http://doi.org/10.7289/V53776SW</dd><dt><span>product_version :</span></dt><dd>v02r01</dd><dt><span>geospatial_lat_min :</span></dt><dd>-90.0</dd><dt><span>geospatial_lat_max :</span></dt><dd> 90.0</dd><dt><span>geospatial_lon_min :</span></dt><dd>-180.0</dd><dt><span>geospatial_lon_max :</span></dt><dd> 180.0</dd><dt><span>spatial_resolution :</span></dt><dd>N/A</dd><dt><span>contributor_name :</span></dt><dd>Judith Lean, Odele Coddington, Peter Pilewskie</dd><dt><span>contributor_role :</span></dt><dd>Principal Investigator and originator of total and spectral solar irradiance model, Principal Investigator and Point-of-Contact for CDR output data, Co-Principal Investigator ensuring overall integrity of the data product</dd><dt><span>creator_name :</span></dt><dd>Odele Coddington, Judith Lean, Peter Pilewskie, Martin Snow, Chris Lindholm, Doug Lindholm, NOAA CDR Program</dd><dt><span>history :</span></dt><dd>This file supersedes version v02r00 data.</dd><dt><span>id :</span></dt><dd>ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd><dt><span>time_coverage_end :</span></dt><dd>2020-12-31</dd><dt><span>date_modified :</span></dt><dd>2021-02-18</dd><dt><span>data_source_files :</span></dt><dd>/glade/work/mgrover/git_repos/solar-forcing/notebooks/data/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd></dl></div></li></ul></div></div></div></div>
+</div>
+</div>
+<div class="section" id="apply-the-data-cleaning-and-calculations">
+<h3>Apply the Data Cleaning and Calculations<a class="headerlink" href="#apply-the-data-cleaning-and-calculations" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have our dataset, we can apply the cleaning and calculations by calling <code class="docutils literal notranslate"><span class="pre">.generate_dataset()</span></code>, similar to the previous section</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irradiance</span><span class="o">.</span><span class="n">generate_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:     (time: 50769, wavelength: 3785, bounds: 2)
+Coordinates:
+  * wavelength  (wavelength) float32 115.5 116.5 117.5 ... 9.992e+04 9.998e+04
+  * time        (time) datetime64[ns] 1882-01-01T12:00:00 ... 2020-12-31T12:0...
+Dimensions without coordinates: bounds
+Data variables:
+    ssi         (time, wavelength) float32 0.01444 0.02427 ... 2.666e-05
+    band_width  (wavelength) float32 1.0 1.0 1.0 1.0 1.0 ... 50.0 50.0 50.0 50.0
+    tsi         (time) float32 1.361e+03 1.361e+03 ... 1.361e+03 1.361e+03
+    tsi_unc     (time) float32 0.4545 0.4814 0.4874 ... 0.1955 0.1786 0.1577
+    time_bnds   (time, bounds) datetime64[ns] ...
+    datesec     (time) int64 43200 43200 43200 43200 ... 43200 43200 43200 43200
+    date        (time) int64 18820101 18820102 18820103 ... 20201230 20201231
+Attributes: (12/38)
+    Conventions:               CF-1.6, ACDD-1.3
+    title:                     Daily SSI calculated using NRL2 solar irradian...
+    source:                    NRLSSI2_v02r01
+    institution:               Naval Research Laboratory Space Science Divisi...
+    standard_name_vocabulary:  CF Standard Name Table v29
+    naming_authority:          gov.noaa.ncei
+    ...                        ...
+    cesm_contact:              Max Grover, mgrover@ucar.edu
+    creation_date:             20210913
+    data_source_url:           http://lasp.colorado.edu/lisird/data/nrl2_files
+    data_description_url:      http://lasp.colorado.edu/lisird/data/nrl2_files
+    data_reference:            Coddington, O., J. Lean, P. Pilewskie, M. Snow...
+    data_summary:              Daily SSI calculated using NRL2 solar irradian...</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-be242711-9212-492d-9b35-4129b92315f2' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-be242711-9212-492d-9b35-4129b92315f2' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 50769</li><li><span class='xr-has-index'>wavelength</span>: 3785</li><li><span>bounds</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-5c17391f-6f1f-46d3-8cf1-c2afe656ca16' class='xr-section-summary-in' type='checkbox'  checked><label for='section-5c17391f-6f1f-46d3-8cf1-c2afe656ca16' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>wavelength</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>115.5 116.5 ... 9.992e+04 9.998e+04</div><input id='attrs-4d35e5c4-5639-4361-8f29-e422d9083416' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4d35e5c4-5639-4361-8f29-e422d9083416' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1c31a775-bc4b-40e9-9440-e6bce8b070f0' class='xr-var-data-in' type='checkbox'><label for='data-1c31a775-bc4b-40e9-9440-e6bce8b070f0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength grid center</dd><dt><span>units :</span></dt><dd>nm</dd><dt><span>standard_name :</span></dt><dd>radiation_wavelength</dd></dl></div><div class='xr-var-data'><pre>array([  115.5,   116.5,   117.5, ..., 99875. , 99925. , 99975. ],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1882-01-01T12:00:00 ... 2020-12-...</div><input id='attrs-315fc80d-9db1-42ad-995e-9cfe800366ee' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-315fc80d-9db1-42ad-995e-9cfe800366ee' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1c8999a2-ef80-40f5-9d3e-6db5a8b88adb' class='xr-var-data-in' type='checkbox'><label for='data-1c8999a2-ef80-40f5-9d3e-6db5a8b88adb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>axis :</span></dt><dd>T</dd><dt><span>bounds :</span></dt><dd>time_bnds</dd><dt><span>note :</span></dt><dd>time recomputed as time_bnds.mean(bounds)</dd></dl></div><div class='xr-var-data'><pre>array([&#x27;1882-01-01T12:00:00.000000000&#x27;, &#x27;1882-01-02T12:00:00.000000000&#x27;,
+       &#x27;1882-01-03T12:00:00.000000000&#x27;, ..., &#x27;2020-12-29T12:00:00.000000000&#x27;,
+       &#x27;2020-12-30T12:00:00.000000000&#x27;, &#x27;2020-12-31T12:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-60faaac0-e3c3-4b29-baa0-5f7ec1b43068' class='xr-section-summary-in' type='checkbox'  checked><label for='section-60faaac0-e3c3-4b29-baa0-5f7ec1b43068' class='xr-section-summary' >Data variables: <span>(7)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>ssi</span></div><div class='xr-var-dims'>(time, wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.01444 0.02427 ... 2.666e-05</div><input id='attrs-aa7a9a3e-a39f-4ddf-8a9c-3337cdb92fa4' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-aa7a9a3e-a39f-4ddf-8a9c-3337cdb92fa4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-11787e75-fc1a-48d3-b4b6-83ecd80e749c' class='xr-var-data-in' type='checkbox'><label for='data-11787e75-fc1a-48d3-b4b6-83ecd80e749c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>mW m-2 nm-1</dd><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Solar Spectral Irradiance</dd></dl></div><div class='xr-var-data'><pre>array([[1.4442729e-02, 2.4271064e-02, 7.9586610e-02, ..., 2.6749316e-05,
+        2.6696480e-05, 2.6643644e-05],
+       [1.4634523e-02, 2.4402272e-02, 8.0362700e-02, ..., 2.6752870e-05,
+        2.6700027e-05, 2.6647183e-05],
+       [1.4565184e-02, 2.4353987e-02, 8.0110349e-02, ..., 2.6750862e-05,
+        2.6698024e-05, 2.6645186e-05],
+       ...,
+       [1.5164529e-02, 2.4764905e-02, 8.2505800e-02, ..., 2.6762735e-05,
+        2.6709873e-05, 2.6657013e-05],
+       [1.5063924e-02, 2.4696233e-02, 8.2093522e-02, ..., 2.6761003e-05,
+        2.6708143e-05, 2.6655285e-05],
+       [1.5061959e-02, 2.4696002e-02, 8.2048610e-02, ..., 2.6761913e-05,
+        2.6709051e-05, 2.6656191e-05]], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>band_width</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>1.0 1.0 1.0 1.0 ... 50.0 50.0 50.0</div><input id='attrs-518c9b3d-b120-4cea-93f9-12913690b32f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-518c9b3d-b120-4cea-93f9-12913690b32f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-69d4a4f2-1a69-4e13-a662-c37d1992e458' class='xr-var-data-in' type='checkbox'><label for='data-69d4a4f2-1a69-4e13-a662-c37d1992e458' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength band width. Centered on wavelength.</dd><dt><span>units :</span></dt><dd>nm</dd></dl></div><div class='xr-var-data'><pre>array([ 1.,  1.,  1., ..., 50., 50., 50.], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>tsi</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>1.361e+03 1.361e+03 ... 1.361e+03</div><input id='attrs-c554f66f-3890-451e-96e5-abfc14ebd7a1' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-c554f66f-3890-451e-96e5-abfc14ebd7a1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-85de08d0-1906-4106-a1ad-7035a49fdfa0' class='xr-var-data-in' type='checkbox'><label for='data-85de08d0-1906-4106-a1ad-7035a49fdfa0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Total Solar Irradiance (W m-2)</dd><dt><span>standard_name :</span></dt><dd>solar_irradiance</dd><dt><span>units :</span></dt><dd>W m-2</dd><dt><span>cell_methods :</span></dt><dd>time: mean</dd><dt><span>ancillary_variables :</span></dt><dd>TSI_UNC</dd></dl></div><div class='xr-var-data'><pre>array([1360.8076, 1360.844 , 1360.74  , ..., 1360.9497, 1360.9473, 1361.0659],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>tsi_unc</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.4545 0.4814 ... 0.1786 0.1577</div><input id='attrs-78ca9942-22b9-43e2-b5a7-ab68e8e1417b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-78ca9942-22b9-43e2-b5a7-ab68e8e1417b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3a293a35-eb5c-450d-8706-223720708c9b' class='xr-var-data-in' type='checkbox'><label for='data-3a293a35-eb5c-450d-8706-223720708c9b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Uncertainty in Daily Total Solar Irradiance (W m-2)</dd><dt><span>units :</span></dt><dd>W m-2</dd></dl></div><div class='xr-var-data'><pre>array([0.454469, 0.481399, 0.487415, ..., 0.195478, 0.178627, 0.157663],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>time_bnds</span></div><div class='xr-var-dims'>(time, bounds)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-79f59345-321b-4193-84e0-cc7ef9690b18' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-79f59345-321b-4193-84e0-cc7ef9690b18' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c1d3c8b2-0969-4772-9000-1a300815640f' class='xr-var-data-in' type='checkbox'><label for='data-c1d3c8b2-0969-4772-9000-1a300815640f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Minimum (inclusive) and maximum (exclusive) dates included in the time averaging</dd></dl></div><div class='xr-var-data'><pre>[101538 values with dtype=datetime64[ns]]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>datesec</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>43200 43200 43200 ... 43200 43200</div><input id='attrs-7a1806cd-f3c0-47cf-bc2e-182792446509' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-7a1806cd-f3c0-47cf-bc2e-182792446509' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c21975c0-a70e-4059-a94b-0e0e9c009149' class='xr-var-data-in' type='checkbox'><label for='data-c21975c0-a70e-4059-a94b-0e0e9c009149' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>seconds after midnight UT</dd></dl></div><div class='xr-var-data'><pre>array([43200, 43200, 43200, ..., 43200, 43200, 43200])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>date</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>18820101 18820102 ... 20201231</div><input id='attrs-a43dc4c8-179d-4b0a-8fad-2034c62605c2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a43dc4c8-179d-4b0a-8fad-2034c62605c2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-397ef8ba-9472-48fa-a1a4-187895055b20' class='xr-var-data-in' type='checkbox'><label for='data-397ef8ba-9472-48fa-a1a4-187895055b20' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([18820101, 18820102, 18820103, ..., 20201229, 20201230, 20201231])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-e3239c13-7eb6-44f1-bab5-bcff97711f42' class='xr-section-summary-in' type='checkbox'  ><label for='section-e3239c13-7eb6-44f1-bab5-bcff97711f42' class='xr-section-summary' >Attributes: <span>(38)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.6, ACDD-1.3</dd><dt><span>title :</span></dt><dd>Daily SSI calculated using NRL2 solar irradiance model. Includes spectrally integrated (total) TSI value</dd><dt><span>source :</span></dt><dd>NRLSSI2_v02r01</dd><dt><span>institution :</span></dt><dd>Naval Research Laboratory Space Science Division and Laboratory for Atmospheric and Space Physics</dd><dt><span>standard_name_vocabulary :</span></dt><dd>CF Standard Name Table v29</dd><dt><span>naming_authority :</span></dt><dd>gov.noaa.ncei</dd><dt><span>date_created :</span></dt><dd>2017-09-30</dd><dt><span>license :</span></dt><dd>See Use Agreement for this CDR.</dd><dt><span>summary :</span></dt><dd>This dataset contains spectral solar irradiance as a function of time and wavelength created with the Naval Research Laboratory model for spectral and total irradiance. Spectral solar irradiance is the wavelength-dependent energy input to the top of the Earth’s atmosphere, at a standard distance of one Astronomical Unit from the Sun. Its units are W per m2 per nm. Also included is the value of total (spectrally integrated) solar irradiance in units W per m2. The dataset is created by Judith Lean (Space Science Division, Naval Research Laboratory), and Odele Coddington, Peter Pilewskie, Martin Snow, Chris Lindholm, and Doug Lindholm (Laboratory for Atmospheric and Space Science, University of Colorado), and NOAA CDR Program.</dd><dt><span>keywords :</span></dt><dd>Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Incoming Solar Radiation, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Irradiance, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Radiation, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Paleoclimate &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Sunspot Activity &amp;gt; Solar Flux, Earth Science &amp;gt; Climate Indicators &amp;gt; Paleoclimate Indicators &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance</dd><dt><span>keywords_vocabulary :</span></dt><dd>Global Change Master Directory (GCMD) Science and Services Keywords</dd><dt><span>cdm_data_type :</span></dt><dd>Any</dd><dt><span>time_coverage_start :</span></dt><dd>1882-01-01</dd><dt><span>program :</span></dt><dd>NOAA Climate Data Record Program</dd><dt><span>cdr_variable :</span></dt><dd>SSI, TSI</dd><dt><span>metadata_link :</span></dt><dd>http://doi.org/10.7289/V53776SW</dd><dt><span>product_version :</span></dt><dd>v02r01</dd><dt><span>geospatial_lat_min :</span></dt><dd>-90.0</dd><dt><span>geospatial_lat_max :</span></dt><dd> 90.0</dd><dt><span>geospatial_lon_min :</span></dt><dd>-180.0</dd><dt><span>geospatial_lon_max :</span></dt><dd> 180.0</dd><dt><span>spatial_resolution :</span></dt><dd>N/A</dd><dt><span>contributor_name :</span></dt><dd>Judith Lean, Odele Coddington, Peter Pilewskie</dd><dt><span>contributor_role :</span></dt><dd>Principal Investigator and originator of total and spectral solar irradiance model, Principal Investigator and Point-of-Contact for CDR output data, Co-Principal Investigator ensuring overall integrity of the data product</dd><dt><span>creator_name :</span></dt><dd>Odele Coddington, Judith Lean, Peter Pilewskie, Martin Snow, Chris Lindholm, Doug Lindholm, NOAA CDR Program</dd><dt><span>history :</span></dt><dd>This file supersedes version v02r00 data.</dd><dt><span>id :</span></dt><dd>ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd><dt><span>time_coverage_end :</span></dt><dd>2020-12-31</dd><dt><span>date_modified :</span></dt><dd>2021-02-18</dd><dt><span>data_source_files :</span></dt><dd>/glade/work/mgrover/git_repos/solar-forcing/notebooks/data/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd><dt><span>data_script :</span></dt><dd>Created by program createSolarFileNRLSSI2.ncl</dd><dt><span>data_script_url :</span></dt><dd>https://svn.code.sf.net/p/codescripts/code/trunk/ncl/solar</dd><dt><span>cesm_contact :</span></dt><dd>Max Grover, mgrover@ucar.edu</dd><dt><span>creation_date :</span></dt><dd>20210913</dd><dt><span>data_source_url :</span></dt><dd>http://lasp.colorado.edu/lisird/data/nrl2_files</dd><dt><span>data_description_url :</span></dt><dd>http://lasp.colorado.edu/lisird/data/nrl2_files</dd><dt><span>data_reference :</span></dt><dd>Coddington, O., J. Lean, P. Pilewskie, M. Snow, and D. Lindholm (2016), A solar irradiance climate data record, Bull. Amer. Meteor. Soc., doi:10.1175/BAMS-D-14-00265.1.</dd><dt><span>data_summary :</span></dt><dd>Daily SSI calculated using NRL2 solar irradiance model. </dd></dl></div></li></ul></div></div></div></div>
+</div>
+</div>
+<div class="section" id="investigate-the-resulting-dataset">
+<h3>Investigate the Resulting Dataset<a class="headerlink" href="#investigate-the-resulting-dataset" title="Permalink to this headline">¶</a></h3>
+<p>We now have our processed dataset, <code class="docutils literal notranslate"><span class="pre">ds</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irradiance</span><span class="o">.</span><span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:     (time: 50769, wavelength: 3785, bounds: 2)
+Coordinates:
+  * wavelength  (wavelength) float32 115.5 116.5 117.5 ... 9.992e+04 9.998e+04
+  * time        (time) datetime64[ns] 1882-01-01T12:00:00 ... 2020-12-31T12:0...
+Dimensions without coordinates: bounds
+Data variables:
+    ssi         (time, wavelength) float32 0.01444 0.02427 ... 2.666e-05
+    band_width  (wavelength) float32 1.0 1.0 1.0 1.0 1.0 ... 50.0 50.0 50.0 50.0
+    tsi         (time) float32 1.361e+03 1.361e+03 ... 1.361e+03 1.361e+03
+    tsi_unc     (time) float32 0.4545 0.4814 0.4874 ... 0.1955 0.1786 0.1577
+    time_bnds   (time, bounds) datetime64[ns] ...
+    datesec     (time) int64 43200 43200 43200 43200 ... 43200 43200 43200 43200
+    date        (time) int64 18820101 18820102 18820103 ... 20201230 20201231
+Attributes: (12/38)
+    Conventions:               CF-1.6, ACDD-1.3
+    title:                     Daily SSI calculated using NRL2 solar irradian...
+    source:                    NRLSSI2_v02r01
+    institution:               Naval Research Laboratory Space Science Divisi...
+    standard_name_vocabulary:  CF Standard Name Table v29
+    naming_authority:          gov.noaa.ncei
+    ...                        ...
+    cesm_contact:              Max Grover, mgrover@ucar.edu
+    creation_date:             20210913
+    data_source_url:           http://lasp.colorado.edu/lisird/data/nrl2_files
+    data_description_url:      http://lasp.colorado.edu/lisird/data/nrl2_files
+    data_reference:            Coddington, O., J. Lean, P. Pilewskie, M. Snow...
+    data_summary:              Daily SSI calculated using NRL2 solar irradian...</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-a4d20889-4d5d-4706-afd5-0dea0b5d4cb8' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-a4d20889-4d5d-4706-afd5-0dea0b5d4cb8' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 50769</li><li><span class='xr-has-index'>wavelength</span>: 3785</li><li><span>bounds</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-e8a60e59-fee0-4a33-8c0e-ed7b90bdb4fe' class='xr-section-summary-in' type='checkbox'  checked><label for='section-e8a60e59-fee0-4a33-8c0e-ed7b90bdb4fe' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>wavelength</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>115.5 116.5 ... 9.992e+04 9.998e+04</div><input id='attrs-8215e144-dc9d-4553-809e-8a80f098cf27' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-8215e144-dc9d-4553-809e-8a80f098cf27' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2b389e71-90b7-4077-82b3-3c69d4b8e709' class='xr-var-data-in' type='checkbox'><label for='data-2b389e71-90b7-4077-82b3-3c69d4b8e709' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength grid center</dd><dt><span>units :</span></dt><dd>nm</dd><dt><span>standard_name :</span></dt><dd>radiation_wavelength</dd></dl></div><div class='xr-var-data'><pre>array([  115.5,   116.5,   117.5, ..., 99875. , 99925. , 99975. ],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1882-01-01T12:00:00 ... 2020-12-...</div><input id='attrs-debaeb4d-7a9d-422d-b32e-ea16e1b23236' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-debaeb4d-7a9d-422d-b32e-ea16e1b23236' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-69b4d5ea-8dfd-4a5d-b482-26000a74593f' class='xr-var-data-in' type='checkbox'><label for='data-69b4d5ea-8dfd-4a5d-b482-26000a74593f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>axis :</span></dt><dd>T</dd><dt><span>bounds :</span></dt><dd>time_bnds</dd><dt><span>note :</span></dt><dd>time recomputed as time_bnds.mean(bounds)</dd></dl></div><div class='xr-var-data'><pre>array([&#x27;1882-01-01T12:00:00.000000000&#x27;, &#x27;1882-01-02T12:00:00.000000000&#x27;,
+       &#x27;1882-01-03T12:00:00.000000000&#x27;, ..., &#x27;2020-12-29T12:00:00.000000000&#x27;,
+       &#x27;2020-12-30T12:00:00.000000000&#x27;, &#x27;2020-12-31T12:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-a5315bf3-355d-4055-8059-b848ffa8fbd0' class='xr-section-summary-in' type='checkbox'  checked><label for='section-a5315bf3-355d-4055-8059-b848ffa8fbd0' class='xr-section-summary' >Data variables: <span>(7)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>ssi</span></div><div class='xr-var-dims'>(time, wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.01444 0.02427 ... 2.666e-05</div><input id='attrs-711c86e8-28c6-4238-9c26-d2bfa9fa28f4' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-711c86e8-28c6-4238-9c26-d2bfa9fa28f4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2f202eb3-8364-4274-9f29-3551619d031d' class='xr-var-data-in' type='checkbox'><label for='data-2f202eb3-8364-4274-9f29-3551619d031d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>mW m-2 nm-1</dd><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Solar Spectral Irradiance</dd></dl></div><div class='xr-var-data'><pre>array([[1.4442729e-02, 2.4271064e-02, 7.9586610e-02, ..., 2.6749316e-05,
+        2.6696480e-05, 2.6643644e-05],
+       [1.4634523e-02, 2.4402272e-02, 8.0362700e-02, ..., 2.6752870e-05,
+        2.6700027e-05, 2.6647183e-05],
+       [1.4565184e-02, 2.4353987e-02, 8.0110349e-02, ..., 2.6750862e-05,
+        2.6698024e-05, 2.6645186e-05],
+       ...,
+       [1.5164529e-02, 2.4764905e-02, 8.2505800e-02, ..., 2.6762735e-05,
+        2.6709873e-05, 2.6657013e-05],
+       [1.5063924e-02, 2.4696233e-02, 8.2093522e-02, ..., 2.6761003e-05,
+        2.6708143e-05, 2.6655285e-05],
+       [1.5061959e-02, 2.4696002e-02, 8.2048610e-02, ..., 2.6761913e-05,
+        2.6709051e-05, 2.6656191e-05]], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>band_width</span></div><div class='xr-var-dims'>(wavelength)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>1.0 1.0 1.0 1.0 ... 50.0 50.0 50.0</div><input id='attrs-884db2de-8a47-4d5a-a930-d8a8ebf1a44f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-884db2de-8a47-4d5a-a930-d8a8ebf1a44f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-78f46847-2925-4687-a042-57db5281967f' class='xr-var-data-in' type='checkbox'><label for='data-78f46847-2925-4687-a042-57db5281967f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Wavelength band width. Centered on wavelength.</dd><dt><span>units :</span></dt><dd>nm</dd></dl></div><div class='xr-var-data'><pre>array([ 1.,  1.,  1., ..., 50., 50., 50.], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>tsi</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>1.361e+03 1.361e+03 ... 1.361e+03</div><input id='attrs-02072d90-7db1-4f16-ab73-87acc062edab' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-02072d90-7db1-4f16-ab73-87acc062edab' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-305cbcf6-781c-49eb-aaea-d14b1c5b9ce8' class='xr-var-data-in' type='checkbox'><label for='data-305cbcf6-781c-49eb-aaea-d14b1c5b9ce8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>NOAA Climate Data Record of Daily Total Solar Irradiance (W m-2)</dd><dt><span>standard_name :</span></dt><dd>solar_irradiance</dd><dt><span>units :</span></dt><dd>W m-2</dd><dt><span>cell_methods :</span></dt><dd>time: mean</dd><dt><span>ancillary_variables :</span></dt><dd>TSI_UNC</dd></dl></div><div class='xr-var-data'><pre>array([1360.8076, 1360.844 , 1360.74  , ..., 1360.9497, 1360.9473, 1361.0659],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>tsi_unc</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.4545 0.4814 ... 0.1786 0.1577</div><input id='attrs-abc864c5-7a0f-40c0-982b-45e0e6e276d9' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-abc864c5-7a0f-40c0-982b-45e0e6e276d9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f2ed62c0-365f-4efd-a0b6-1ca516b6b49e' class='xr-var-data-in' type='checkbox'><label for='data-f2ed62c0-365f-4efd-a0b6-1ca516b6b49e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Uncertainty in Daily Total Solar Irradiance (W m-2)</dd><dt><span>units :</span></dt><dd>W m-2</dd></dl></div><div class='xr-var-data'><pre>array([0.454469, 0.481399, 0.487415, ..., 0.195478, 0.178627, 0.157663],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>time_bnds</span></div><div class='xr-var-dims'>(time, bounds)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-c3e7fb54-31a3-47bd-96d6-07e2761d6809' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-c3e7fb54-31a3-47bd-96d6-07e2761d6809' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-de678390-4246-4e54-a1f0-16860014f860' class='xr-var-data-in' type='checkbox'><label for='data-de678390-4246-4e54-a1f0-16860014f860' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Minimum (inclusive) and maximum (exclusive) dates included in the time averaging</dd></dl></div><div class='xr-var-data'><pre>[101538 values with dtype=datetime64[ns]]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>datesec</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>43200 43200 43200 ... 43200 43200</div><input id='attrs-6affa43c-7312-4b3d-9379-cf809d7c02b8' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-6affa43c-7312-4b3d-9379-cf809d7c02b8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-886598fc-7f5e-44bb-9160-33647d572411' class='xr-var-data-in' type='checkbox'><label for='data-886598fc-7f5e-44bb-9160-33647d572411' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>seconds after midnight UT</dd></dl></div><div class='xr-var-data'><pre>array([43200, 43200, 43200, ..., 43200, 43200, 43200])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>date</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>18820101 18820102 ... 20201231</div><input id='attrs-193c9f9f-8708-4a66-a439-2719fe6f664e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-193c9f9f-8708-4a66-a439-2719fe6f664e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5342d56d-ba59-4deb-9b97-da551de23a48' class='xr-var-data-in' type='checkbox'><label for='data-5342d56d-ba59-4deb-9b97-da551de23a48' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([18820101, 18820102, 18820103, ..., 20201229, 20201230, 20201231])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-a8f5cdaa-b724-42ea-875c-7b72df78500c' class='xr-section-summary-in' type='checkbox'  ><label for='section-a8f5cdaa-b724-42ea-875c-7b72df78500c' class='xr-section-summary' >Attributes: <span>(38)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.6, ACDD-1.3</dd><dt><span>title :</span></dt><dd>Daily SSI calculated using NRL2 solar irradiance model. Includes spectrally integrated (total) TSI value</dd><dt><span>source :</span></dt><dd>NRLSSI2_v02r01</dd><dt><span>institution :</span></dt><dd>Naval Research Laboratory Space Science Division and Laboratory for Atmospheric and Space Physics</dd><dt><span>standard_name_vocabulary :</span></dt><dd>CF Standard Name Table v29</dd><dt><span>naming_authority :</span></dt><dd>gov.noaa.ncei</dd><dt><span>date_created :</span></dt><dd>2017-09-30</dd><dt><span>license :</span></dt><dd>See Use Agreement for this CDR.</dd><dt><span>summary :</span></dt><dd>This dataset contains spectral solar irradiance as a function of time and wavelength created with the Naval Research Laboratory model for spectral and total irradiance. Spectral solar irradiance is the wavelength-dependent energy input to the top of the Earth’s atmosphere, at a standard distance of one Astronomical Unit from the Sun. Its units are W per m2 per nm. Also included is the value of total (spectrally integrated) solar irradiance in units W per m2. The dataset is created by Judith Lean (Space Science Division, Naval Research Laboratory), and Odele Coddington, Peter Pilewskie, Martin Snow, Chris Lindholm, and Doug Lindholm (Laboratory for Atmospheric and Space Science, University of Colorado), and NOAA CDR Program.</dd><dt><span>keywords :</span></dt><dd>Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Incoming Solar Radiation, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Irradiance, Earth Science &amp;gt; Atmosphere &amp;gt; Atmospheric Radiation &amp;gt; Solar Radiation, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Paleoclimate &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Sunspot Activity &amp;gt; Solar Flux, Earth Science &amp;gt; Climate Indicators &amp;gt; Paleoclimate Indicators &amp;gt; Paleoclimate Reconstructions &amp;gt; Solar Forcing/Insolation Reconstruction, Earth Science &amp;gt; Climate Indicators &amp;gt; Sun-Earth Interactions &amp;gt; Solar Activity &amp;gt; Solar Irradiance</dd><dt><span>keywords_vocabulary :</span></dt><dd>Global Change Master Directory (GCMD) Science and Services Keywords</dd><dt><span>cdm_data_type :</span></dt><dd>Any</dd><dt><span>time_coverage_start :</span></dt><dd>1882-01-01</dd><dt><span>program :</span></dt><dd>NOAA Climate Data Record Program</dd><dt><span>cdr_variable :</span></dt><dd>SSI, TSI</dd><dt><span>metadata_link :</span></dt><dd>http://doi.org/10.7289/V53776SW</dd><dt><span>product_version :</span></dt><dd>v02r01</dd><dt><span>geospatial_lat_min :</span></dt><dd>-90.0</dd><dt><span>geospatial_lat_max :</span></dt><dd> 90.0</dd><dt><span>geospatial_lon_min :</span></dt><dd>-180.0</dd><dt><span>geospatial_lon_max :</span></dt><dd> 180.0</dd><dt><span>spatial_resolution :</span></dt><dd>N/A</dd><dt><span>contributor_name :</span></dt><dd>Judith Lean, Odele Coddington, Peter Pilewskie</dd><dt><span>contributor_role :</span></dt><dd>Principal Investigator and originator of total and spectral solar irradiance model, Principal Investigator and Point-of-Contact for CDR output data, Co-Principal Investigator ensuring overall integrity of the data product</dd><dt><span>creator_name :</span></dt><dd>Odele Coddington, Judith Lean, Peter Pilewskie, Martin Snow, Chris Lindholm, Doug Lindholm, NOAA CDR Program</dd><dt><span>history :</span></dt><dd>This file supersedes version v02r00 data.</dd><dt><span>id :</span></dt><dd>ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd><dt><span>time_coverage_end :</span></dt><dd>2020-12-31</dd><dt><span>date_modified :</span></dt><dd>2021-02-18</dd><dt><span>data_source_files :</span></dt><dd>/glade/work/mgrover/git_repos/solar-forcing/notebooks/data/ssi_v02r01_daily_s18820101_e20201231_c20210218.nc</dd><dt><span>data_script :</span></dt><dd>Created by program createSolarFileNRLSSI2.ncl</dd><dt><span>data_script_url :</span></dt><dd>https://svn.code.sf.net/p/codescripts/code/trunk/ncl/solar</dd><dt><span>cesm_contact :</span></dt><dd>Max Grover, mgrover@ucar.edu</dd><dt><span>creation_date :</span></dt><dd>20210913</dd><dt><span>data_source_url :</span></dt><dd>http://lasp.colorado.edu/lisird/data/nrl2_files</dd><dt><span>data_description_url :</span></dt><dd>http://lasp.colorado.edu/lisird/data/nrl2_files</dd><dt><span>data_reference :</span></dt><dd>Coddington, O., J. Lean, P. Pilewskie, M. Snow, and D. Lindholm (2016), A solar irradiance climate data record, Bull. Amer. Meteor. Soc., doi:10.1175/BAMS-D-14-00265.1.</dd><dt><span>data_summary :</span></dt><dd>Daily SSI calculated using NRL2 solar irradiance model. </dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-miniconda3-cesm-collections-dev-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-miniconda3-cesm-collections-dev-py",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-miniconda3-cesm-collections-dev-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="apeep.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Medium-Energy Electron Forcing Comparison</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Max Grover<br/>
+    
+        &copy; Copyright 2020.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
